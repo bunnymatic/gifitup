@@ -18,6 +18,6 @@
 \#*
 \.#*
 \.sass-cache
-/public/*
+/public/generated
 # Ignore coverage data.
 /coverage

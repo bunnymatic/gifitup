@@ -13,12 +13,15 @@ class Animacrazy < Sinatra::Base
   set :public_folder, 'public'
 
   get '/generate' do
+    slim :generate, :layout => :layout, :locals => {:frames => nil}
+  end
+
+  post '/generate' do
     words = params['words'].split.map(&:strip)
     frames = words.map do |word|
       Image.generate_frame(word, :dest_dir => File.join(settings.public_folder, 'generated'))
     end
     frames = frames.map{|f| f.gsub(/public/,'').gsub(/^\/?/,'/') }
-    puts frames
     slim :generate, :locals => {:frames => frames}
   end
 
