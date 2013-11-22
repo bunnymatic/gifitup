@@ -1,5 +1,11 @@
-h1 Here are your frames
 
-- frames.each do |f|
-  .frame
-    img src=f
+.word-form
+  form action="/generate" method="post"
+    .form-group
+      textarea name="words"
+    input type="submit" value="get it!"
+.frames
+  - if frames && frames.count
+    - frames.each do |f|
+      .frame
+        img src=f
