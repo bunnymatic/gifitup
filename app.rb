@@ -19,11 +19,14 @@ class Animacrazy < Sinatra::Base
   post '/' do
     dest_dir = File.join(settings.public_folder, 'generated')
     words = params['words'].split.map(&:strip)
-    frames = [Image.generate_anim(words, :dest_dir => dest_dir)]
-    # frames = words.map do |word|
-    #   Image.generate_frame(word, :dest_dir => dest_dir )
-    # end
-    frames = frames.flatten.map{|f| f.gsub(/public/,'').gsub(/^\/?/,'/') }
+    frames = []
+    if words && (words.length > 1)
+      frames = [Image.generate_anim(words, :dest_dir => dest_dir)]
+      # frames = words.map do |word|
+      #   Image.generate_frame(word, :dest_dir => dest_dir )
+      # end
+      frames = frames.flatten.map{|f| f.gsub(/public/,'').gsub(/^\/?/,'/') }
+    end
     slim :index, :locals => {:frames => frames, :words => words}
   end
 

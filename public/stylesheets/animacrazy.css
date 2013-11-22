@@ -69,6 +69,9 @@ input, textarea {
   -webkit-border-radius: 10px;
   border-radius: 10px;
   background: #eee;
+
+
+
 }
 
 textarea {
@@ -207,9 +210,9 @@ section {
   position: relative;
 }
 #instructions {
-  width: 0px;
-  height: 0px;
-  top: -10px;
+  width: 600px;
+  height: 600px;
+  top: -800px;
   left: -100px;
   color: white;
   background: rgba(20,20,20,0.7);
@@ -218,17 +221,17 @@ section {
   -ms-border-radius: 15px;
   -o-border-radius: 15px;
   border-radius: 15px;
-  position: relative;
-  display: none;
+  position: absolute;
+
+  -webkit-transition: top 1s ease;
+  -moz-transition: top 1s ease;
+  -o-transition: top 1s ease;
+  -ms-transition: top 1s ease;
+  transition: top 1s ease;
 }
 
-.instructions:hover #instructions {
-  display: block;
-  position: absolute;
-  width: 600px;
-  height: 600px;
-  visibility: visible;
-
+.huh:hover #instructions {
+  top: -20px;
 }
 
 #instructions .content {
