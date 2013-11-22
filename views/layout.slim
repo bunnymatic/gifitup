@@ -3,15 +3,22 @@ html
   head
     title AnimaCRAZY!
     link type="text/css" href="/stylesheets/animacrazy.css" rel="stylesheet"
-    script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"
-    script type="text/javascript" src="/javascripts/spin.min.js"
-    script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"
-    script type="text/javascript" src="/javascripts/spinit.js"
-    script type="text/javascript" src="/javascripts/animacrazy.js"
+    link type="text/css" href="/stylesheets/gh-fork-ribbon.css" rel="stylesheet"
 
   body
-    #spinner
     header.header
     .container
-    == yield
+      section
+        #spinner
+      == yield
     footer.footer
+
+    .github-fork-ribbon-wrapper.right-bottom
+      .github-fork-ribbon
+        a href="#" carbon five
+
+  script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"
+  script type="text/javascript" src="/javascripts/spin.min.js"
+  script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"
+  script type="text/javascript" src="/javascripts/spinit.js"
+  script type="text/javascript" src="/javascripts/animacrazy.js"
