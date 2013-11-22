@@ -22,7 +22,7 @@ class Animacrazy < Sinatra::Base
       Image.generate_frame(word, :dest_dir => File.join(settings.public_folder, 'generated'))
     end
     frames = frames.map{|f| f.gsub(/public/,'').gsub(/^\/?/,'/') }
-    slim :generate, :locals => {:frames => frames}
+    slim :generate, :locals => {:frames => frames, :words => words}
   end
 
 end

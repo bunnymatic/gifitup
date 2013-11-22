@@ -15,9 +15,9 @@ LTSpinner = (function() {
       hwaccel: false,
       className: 'spinner',
       zIndex: 2e9,
-      top: '50px',
-      left: '420px',
-      color: '#f80',
+      top: '160px',
+      left: '100%',
+      color: '#999',
       element: 'spinner'
     }, opts);
     this.spinner = new Spinner(this.opts);

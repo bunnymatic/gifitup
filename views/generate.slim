@@ -1,10 +1,18 @@
-
-.word-form
+- words ||= []
+- frames ||= []
+section.instructions
+  a.button.huh href="#" ?
+  #instructions
+    .content
+      p type in some words
+      p get an animated gif
+section.word-form
   form action="/generate" method="post"
     .form-group
       textarea name="words"
+        = (words||[]).join(' ')
     input type="submit" value="get it!"
-.frames
+section.frames
   - if frames && frames.count
     - frames.each do |f|
       .frame
