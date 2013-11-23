@@ -1,4 +1,4 @@
-# Anima CRAZY!
+# Gif It Up!
 
 Generate animated gifs of words and such easier than you ever have!
 

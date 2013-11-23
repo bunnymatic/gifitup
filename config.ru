@@ -1,5 +1,5 @@
 require './app'
 
-use Rack::Static, :urls => ['/generated/'], :root => 'public'
+use Rack::Static, :urls => ['/images/', '/generated/'], :root => 'public'
 
 run Animacrazy
