@@ -244,3 +244,7 @@ section {
   width: 400px;
   margin: auto;
 }
+
+.select2-container {
+  width: 100%;
+}

@@ -13,21 +13,25 @@ class Animacrazy < Sinatra::Base
   set :public_folder, 'public'
 
   get '/' do
-    slim :index, :layout => :layout, :locals => {:frames => nil}
+    fetch_fonts
+    slim :index, :layout => :layout, :locals => {:frames => nil, :fonts => @fonts}
   end
 
   post '/' do
+    fetch_fonts
     dest_dir = File.join(settings.public_folder, 'generated')
     words = params['words'].split.map(&:strip)
+    font = params['font']
     frames = []
-    if words && (words.length > 1)
-      frames = [Image.generate_anim(words, :dest_dir => dest_dir)]
-      # frames = words.map do |word|
-      #   Image.generate_frame(word, :dest_dir => dest_dir )
-      # end
-      frames = frames.flatten.map{|f| f.gsub(/public/,'').gsub(/^\/?/,'/') }
+    if words && (words.length >= 1)
+      anim = Image.generate_anim(words, :font => font, :dest_dir => dest_dir)
+      frames = [anim.gsub(/public/,'').gsub(/^\/?/,'/')]
     end
-    slim :index, :locals => {:frames => frames, :words => words}
+    slim :index, :locals => {:frames => frames, :words => words, :fonts => @fonts, :font => font }
   end
 
+
+  def fetch_fonts
+    @fonts ||= Font.available
+  end
 end
