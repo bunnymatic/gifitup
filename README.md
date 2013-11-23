@@ -2,6 +2,14 @@
 
 Generate animated gifs of words and such easier than you ever have!
 
+# Deployment
+
+It's on heroku
+
+    http://gifitup.herokuapp.com
+
+
+# Development
 
 ## System Requirements
 
