@@ -1,5 +1,7 @@
 - words ||= []
 - frames ||= []
+- fonts ||= []
+- font ||= font
 section.instructions
   a.button.huh href="#"
     | ?
@@ -8,11 +10,7 @@ section.instructions
         p type in some words
         p get an animated gif
 section.word-form
-  form action="/" method="post"
-    .form-group
-      textarea name="words"
-        = (words||[]).join(' ')
-    input type="submit" value="get it!"
+  == slim :image_form, :locals => {:fonts => fonts, :words => words, :font => font}
 section.frames
   - if frames && frames.count
     - frames.each do |f|
