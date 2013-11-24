@@ -272,9 +272,13 @@ header, .imgs {
 header h1 {
   text-align: center;
 }
+header h1 a.home {
+  position:absolute;
+  right: 50px;
+}
 header h1 span {
   white-space: nowrap;
-  padding: 15px 60px 25px;
+  padding: 15px 45px 25px 60px;
   background-color: rgba(20,20,20,0.4);
 }
 .imgs .img {
