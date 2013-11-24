@@ -1,21 +1,24 @@
 class Image
 
+  DEFAULT_OPTS = {
+    :background => 'black',
+    :fill => 'white',
+    :gravity => 'center',
+    :font => 'Helvetica-Bold',
+    :pointsize => 72,
+    :size => '500x500',
+    :delay => 60
+  }
+
   def self.generate_animation(words, opts = {})
     words = [words].flatten.compact
-    dest_dir = opts.delete(:dest_dir) || 'public/generated/'
-    fname = temp_gif(sanitize_filename(words.join('')), dest_dir)
-    FileUtils.mkdir_p(dest_dir)
-    opts = {
-      :background => 'black',
-      :fill => 'white',
-      :gravity => 'center',
-      :font => 'Helvetica-Bold',
-      :pointsize => 72,
-      :size => '500x500'
-    }.merge(opts)
+    fname,dir = generate_filename(words, opts.delete(:dest_dir))
+    FileUtils.mkdir_p(dir)
+
+    opts = DEFAULT_OPTS.merge(opts)
 
     r = MojoMagick::convert(nil,fname) do |c|
-      c.delay 60
+      c.delay opts.delete(:delay)
       c.loop 0
       words.each do |w|
         opts[:label] = w
@@ -29,19 +32,24 @@ class Image
     fname
   end
 
-  def self.temp_gif(pfx, dest_dir)
-    fname = nil
-    Dir::Tmpname.create([pfx,'.gif']) do |path| 
-      fname = File.join(dest_dir, File.basename(path))
+  class << self
+    private
+    def generate_filename(words, destination = nil)
+      dest_dir = destination || 'public/generated/'
+      fname = temp_gif(sanitize_filename(words.join('')), dest_dir)
+      [fname, dest_dir]
     end
-    fname
-  end
 
-  def self.word_as_key(word)
-    sanitize_filename(word)
-  end
+    def temp_gif(pfx, dest_dir)
+      fname = nil
+      Dir::Tmpname.create([pfx,'.gif']) do |path|
+        fname = File.join(dest_dir, File.basename(path))
+      end
+      fname
+    end
 
-  def self.sanitize_filename(fname)
-    fname.gsub(/[[:punct:]]/,'').gsub(/\s+/,'_')
+    def sanitize_filename(fname)
+      fname.gsub(/[[:punct:]]/,'').gsub(/\s+/,'_')
+    end
   end
 end
