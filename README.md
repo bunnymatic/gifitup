@@ -46,8 +46,6 @@ If you get there, you're probably in bizness
 
 ### Make some frames
 
-Hit `http://localhost:9292/generate?words=this+is+going+to+rock`
-
-Try again with different words in the url.
+Hit `http://localhost:9292/` and start making stuff
 
     
