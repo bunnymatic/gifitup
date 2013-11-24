@@ -1,9 +1,10 @@
 class Image
 
-  def self.generate_anim(words, opts = {})
+  def self.generate_animation(words, opts = {})
+    words = [words].flatten.compact
     dest_dir = opts.delete(:dest_dir) || 'public/generated/'
     frames = words.map{|w| generate_frame(w, dest_dir, opts)}
-    fname = temp_gif(words.join('').gsub(/[[:punct:]]/,''), dest_dir)
+    fname = temp_gif(sanitize_filename(words.join('')), dest_dir)
     MojoMagick::convert(nil,fname) do |c|
       c.delay 40
       c.loop 0
@@ -51,7 +52,10 @@ class Image
   end
 
   def self.word_as_key(word)
-    word.gsub(/[[:punct:]]/,'').gsub(/\s+/,'').to_sym
+    sanitize_filename(word)
   end
 
+  def self.sanitize_filename(fname)
+    fname.gsub(/[[:punct:]]/,'').gsub(/\s+/,'_')
+  end
 end
