@@ -24,8 +24,8 @@ class Animacrazy < Sinatra::Base
     font = params['font']
     frames = []
     if words && (words.length >= 1)
-      anim = Image.generate_anim(words, :font => font, :dest_dir => dest_dir)
-      frames = [anim.gsub(/public/,'').gsub(/^\/?/,'/')]
+      anim = Image.generate_animation(words, :font => font, :dest_dir => dest_dir)
+      frames = [anim.gsub(/public/,'').gsub(/^\/*/,'/')]
     end
     slim :index, :locals => {:frames => frames, :words => words, :fonts => @fonts, :font => font }
   end
