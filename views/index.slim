@@ -2,13 +2,25 @@
 - frames ||= []
 - fonts ||= []
 - font ||= font
-section.instructions
-  a.button.huh href="#"
-    | ?
-    #instructions
-      .content
-        p type in some words
-        p get an animated gif
+
+section.nav
+  .instructions
+    .button.huh href="#"
+      | ?
+      #instructions
+        .content
+          p type in some words
+          p get an animated gif
+  .gallery
+    .button
+      == "&amp;"
+      #gallery
+        .content
+          p 
+            | check out the
+            '
+            a href="/gallery" gallery
+
 section.word-form
   == slim :image_form, :locals => {:fonts => fonts, :words => words, :font => font}
 section.frames
