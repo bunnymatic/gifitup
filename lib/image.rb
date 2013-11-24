@@ -4,7 +4,7 @@ class Image
     words = [words].flatten.compact
     dest_dir = opts.delete(:dest_dir) || 'public/generated/'
     fname = temp_gif(sanitize_filename(words.join('')), dest_dir)
-
+    FileUtils.mkdir_p(dest_dir)
     opts = {
       :background => 'black',
       :fill => 'white',
