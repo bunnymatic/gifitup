@@ -11,12 +11,12 @@ class Image
   }
 
   def self.generate_animation(words, opts = {})
+    opts.symbolize_keys!
     words = [words].flatten.compact
     fname,dir = generate_filename(words, opts.delete(:dest_dir))
     FileUtils.mkdir_p(dir)
 
     opts = DEFAULT_OPTS.merge(opts)
-
     r = MojoMagick::convert(nil,fname) do |c|
       c.delay opts.delete(:delay)
       c.loop 0

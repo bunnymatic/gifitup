@@ -265,6 +265,7 @@ section {
 .select2-container {
   width: 100%;
 }
+
 header, .imgs {
   margin: auto;
   width: 90%;
@@ -284,4 +285,30 @@ header h1 span {
 .imgs .img {
   margin: 30px;
   display:inline-block;
+}
+
+/** slider mods */
+.jslider .jslider-value {
+  background: transparent;
+  font-size:24px;
+  top:-26px;
+}
+.delay-slider {
+  margin: 40px 0;
+}
+
+.jslider_c5 .jslider-bg .l {
+  background-position: 0 -40px;
+}
+.jslider_c5 .jslider-bg .f {
+  background-position: 0 -40px;
+}
+.jslider_c5 .jslider-bg .r {
+  background-position: 0 -40px;
+}
+.jslider_c5 .jslider-bg .v {
+  background-position: 0 -40px;
+}
+.jslider_c5 .jslider-pointer {
+  background-position: -40px -60px;
 }

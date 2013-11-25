@@ -1,7 +1,7 @@
-form action="/" method="post"
+form.animator action="/" method="post"
   .form-group
     textarea name="words"
-      = (words||[]).join(' ')
+      = ([words].flatten||[]).join(' ')
   .form-group
     select.select2 name="font"
       - fonts.map(&:name).each do |f|
@@ -9,5 +9,8 @@ form action="/" method="post"
           option selected="selected" value=f #{f}
         - else
           option value=f #{f}
+  .form-group
+    .delay-slider
+      input#delay-slider type="slider" name="delay" value="#{delay}"
 
   input type="submit" value="get it!"
