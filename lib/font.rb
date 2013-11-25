@@ -5,11 +5,11 @@ class Font
   end
 
   def self.default
-    fonts = available.map(&:name)
+    fonts = available
     font_finders = [/helv/i, /verda/i, /times/i, /book/i]
     f = nil
     font_finders.each do |re|
-      f = fonts.select{|f| f =~ re}.first
+      f = fonts.select{|f| f.name =~ re}.first
       break if f
     end
     f
