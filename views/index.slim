@@ -2,6 +2,7 @@
 - frames ||= []
 - fonts ||= []
 - font ||= font
+- delay ||= 0
 
 section.nav
   .instructions
@@ -16,13 +17,14 @@ section.nav
       == "&amp;"
       #gallery
         .content
-          p 
+          p
             | check out the
             '
             a href="/gallery" gallery
 
 section.word-form
-  == slim :image_form, :locals => {:fonts => fonts, :words => words, :font => font}
+  == slim :image_form, :locals => {:delay => delay, :fonts => fonts, :words => words, :font => font}
+
 section.frames
   - if frames && frames.count
     - frames.each do |f|

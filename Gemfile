@@ -17,6 +17,5 @@ group :test do
   gem "simplecov"
   gem "rspec"
   gem "rack-test"
-  gem 'hpricot'
-  gem 'rspec_hpricot_matchers'
+  gem 'rspec-html-matchers'
 end

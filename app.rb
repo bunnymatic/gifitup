@@ -20,13 +20,25 @@ class Animacrazy < Sinatra::Base
   post '/' do
     fetch_fonts
     words = params['words'].split.map(&:strip)
-    font = params['font']
+    font = params['font'] || default_font
+    delay = params['delay']
     frames = []
     if words && (words.length >= 1)
-      anim = Image.generate_animation(words, :font => font, :dest_dir => storage_directory)
+      opts = {
+        :delay => delay.to_f * 100.0,
+        :font => font,
+        :dest_dir => storage_directory
+      }
+      anim = Image.generate_animation(words, opts)
       frames = [asset_filename(anim)]
     end
-    slim :index, :locals => {:frames => frames, :words => words, :fonts => @fonts, :font => font }
+
+    locals = {
+      :frames => frames,
+      :fonts => @fonts
+    }.merge(params.slice(*%w(words font delay)).symbolize_keys)
+
+    slim :index, :locals => locals
   end
 
   get '/gallery' do
@@ -44,6 +56,10 @@ class Animacrazy < Sinatra::Base
 
   def fetch_fonts
     @fonts ||= Font.available
+  end
+
+  def default_font
+    Font.default
   end
 
   def storage_directory
