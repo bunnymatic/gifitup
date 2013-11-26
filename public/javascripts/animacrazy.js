@@ -27,6 +27,15 @@ $(function() {
       dimension: ' s',
       skin: 'c5'
     });
+
+    $('#font-size-slider').slider({
+      from:6,
+      to: 200,
+      step: 1,
+      round: 0,
+      dimension: ' px',
+      skin: 'c5'
+    });
   }
 
 

@@ -17,6 +17,8 @@ class Image
     FileUtils.mkdir_p(dir)
 
     opts = DEFAULT_OPTS.merge(opts)
+    opts[:pointsize] = 6 if opts[:pointsize].to_i < 6
+
     r = MojoMagick::convert(nil,fname) do |c|
       c.delay opts.delete(:delay)
       c.loop 0

@@ -16,12 +16,14 @@ describe 'Animacrazy' do
     it 'shows an input form' do
       get '/'
       expect(last_response).to be_ok
-      expect(last_response.body).to have_tag 'form select[@name=font]'
-      expect(last_response.body).to have_tag 'form textarea[@name=words]'
+      expect(last_response.body).to have_tag 'form select[name=font]'
+      expect(last_response.body).to have_tag 'form textarea', :with => {:name => 'words'}
+      expect(last_response.body).to have_tag 'form #font-size-slider'
+      expect(last_response.body).to have_tag 'form #delay-slider'
+      expect(last_response.body).to have_tag 'form select', :with => {:name => 'font'}
     end
 
     it 'sets the default font' do
-      pending
       expect(last_response.body).to have_tag "select option", :with => {:selected => 'selected'}
     end
 
@@ -38,9 +40,10 @@ describe 'Animacrazy' do
 
     it 'sets the form data' do
       Image.stub(:generate_animation => '/public' + file)
-      post '/', "words" => words.join(' '), 'delay' => 40, 'font' => 'Helvetica'
+      post '/', "words" => words.join(' '), 'delay' => 40, 'font' => 'Helvetica', 'font_size' => 20
       expect(last_response.body).to have_tag "textarea", :with => {:name => 'words'}, :text => words.join(' ')
       expect(last_response.body).to have_tag "input#delay-slider", :with => {:value => 40}
+      expect(last_response.body).to have_tag "input#font-size-slider", :with => {:value => 20}
       expect(last_response.body).to have_tag "select option", :with => {:selected => 'selected'}, :text => 'Helvetica'
     end
 

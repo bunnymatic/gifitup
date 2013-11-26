@@ -10,7 +10,10 @@ form.animator action="/" method="post"
         - else
           option value=f #{f}
   .form-group
-    .delay-slider
+    .font-size.slider
+      input#font-size-slider type="slider" name="font_size" value="#{font_size}"
+  .form-group
+    .delay.slider
       input#delay-slider type="slider" name="delay" value="#{delay}"
 
   input type="submit" value="get it!"
