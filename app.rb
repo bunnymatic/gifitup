@@ -6,6 +6,7 @@ require 'sinatra/base'
 require 'json'
 
 Dir['./lib/**/*.rb'].each { |file| require file }
+Dir['./models/**/*.rb'].each { |file| require file }
 
 class Animacrazy < Sinatra::Base
   set :static, true

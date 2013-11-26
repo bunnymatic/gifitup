@@ -2,6 +2,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     bond (0.4.3)
+    dalli (2.6.4)
     diff-lcs (1.2.4)
     ffi (1.9.3)
     listen (1.0.3)
@@ -68,6 +69,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  dalli
   mojo_magick
   rack-test
   rake
