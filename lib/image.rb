@@ -51,7 +51,7 @@ class Image
     end
 
     def sanitize_filename(fname)
-      fname.gsub(/[[:punct:]]/,'').gsub(/\s+/,'_')
+      fname.gsub(/[[:punct:]]/,'').gsub(/\s+/,'_')[0..49]
     end
   end
 end
