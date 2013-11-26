@@ -310,3 +310,19 @@ header h1 span {
 .jslider_c5 .jslider-pointer {
   background-position: -40px -60px;
 }
+
+.color-box {
+  line-height: 40px;
+  height: 40px;
+  border: 1px solid white;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+.colpick {
+  height: 200px;
+}
+.colpick input {
+  letter-spacing: 1px;
+}

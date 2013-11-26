@@ -21,6 +21,7 @@ describe 'Animacrazy' do
       expect(last_response.body).to have_tag 'form #font-size-slider'
       expect(last_response.body).to have_tag 'form #delay-slider'
       expect(last_response.body).to have_tag 'form select', :with => {:name => 'font'}
+      expect(last_response.body).to have_tag 'form input', :with => {:name => 'background', :type => "hidden"}
     end
 
     it 'sets the default font' do
