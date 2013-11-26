@@ -10,6 +10,10 @@ form.animator action="/" method="post"
         - else
           option value=f #{f}
   .form-group
+    .background.color-picker
+      .color-box pizazz
+      input#background type="hidden" name="background" value="#{background}"
+  .form-group
     .font-size.slider
       input#font-size-slider type="slider" name="font_size" value="#{font_size}"
   .form-group

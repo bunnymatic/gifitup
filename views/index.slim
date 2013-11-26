@@ -4,6 +4,8 @@
 - font ||= font
 - font_size ||= 24
 - delay ||= 0
+- background ||= '#00000'
+- fill ||= '#ffffff'
 
 section.nav
   .instructions
@@ -24,7 +26,7 @@ section.nav
             a href="/gallery" gallery
 
 section.word-form
-  == slim :image_form, :locals => {:delay => delay, :fonts => fonts, :words => words, :font => font, :font_size => font_size}
+  == slim :image_form, :locals => {:delay => delay, :fill => fill, :background => background, :fonts => fonts, :words => words, :font => font, :font_size => font_size}
 
 section.frames
   - if frames && frames.count
