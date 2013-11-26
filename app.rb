@@ -14,7 +14,7 @@ class Animacrazy < Sinatra::Base
 
   get '/' do
     fetch_fonts
-    slim :index, :layout => :layout, :locals => {:frames => nil, :fonts => @fonts, :font => Font.default.name}
+    slim :index, :layout => :layout, :locals => {:frames => nil, :fonts => @fonts, :font => Font.default.name, :delay => 0.40 }
   end
 
   post '/' do
