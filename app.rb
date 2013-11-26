@@ -14,7 +14,7 @@ class Animacrazy < Sinatra::Base
 
   get '/' do
     fetch_fonts
-    slim :index, :layout => :layout, :locals => {:frames => nil, :fonts => @fonts}
+    slim :index, :layout => :layout, :locals => {:frames => nil, :fonts => @fonts, :font => Font.default.name}
   end
 
   post '/' do
@@ -22,12 +22,14 @@ class Animacrazy < Sinatra::Base
     words = params['words'].split.map(&:strip)
     font = params['font'] || default_font
     delay = params['delay']
+    font_size = params['font_size']
     frames = []
     if words && (words.length >= 1)
       opts = {
         :delay => delay.to_f * 100.0,
         :font => font,
-        :dest_dir => storage_directory
+        :dest_dir => storage_directory,
+        :pointsize => font_size
       }
       anim = Image.generate_animation(words, opts)
       frames = [asset_filename(anim)]
@@ -36,7 +38,7 @@ class Animacrazy < Sinatra::Base
     locals = {
       :frames => frames,
       :fonts => @fonts
-    }.merge(params.slice(*%w(words font delay)).symbolize_keys)
+    }.merge(params.slice(*%w(words font delay font_size)).symbolize_keys)
 
     slim :index, :locals => locals
   end
