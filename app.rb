@@ -31,7 +31,7 @@ class Animacrazy < Sinatra::Base
         :dest_dir => storage_directory,
         :pointsize => font_size
       }
-      anim = Image.generate_animation(words, opts)
+      anim = ImageProcessor.new.generate_animation(words, opts)
       frames = [asset_filename(anim)]
     end
 

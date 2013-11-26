@@ -33,13 +33,13 @@ describe 'Animacrazy' do
     let(:words) { %w(gif it up) }
     let(:file) { '/generated/animation.gif' }
     it 'generates and shows an animation' do
-      Image.should_receive(:generate_animation).with(words, an_instance_of(Hash)).and_return('/public' + file)
+      ImageProcessor.any_instance.should_receive(:generate_animation).with(words, an_instance_of(Hash)).and_return('/public' + file)
       post '/', "words" => words.join(' ')
       expect(last_response.body).to have_tag "img", :with => {:src => file}
     end
 
     it 'sets the form data' do
-      Image.stub(:generate_animation => '/public' + file)
+      ImageProcessor.any_instance.stub(:generate_animation => '/public' + file)
       post '/', "words" => words.join(' '), 'delay' => 40, 'font' => 'Helvetica', 'font_size' => 20
       expect(last_response.body).to have_tag "textarea", :with => {:name => 'words'}, :text => words.join(' ')
       expect(last_response.body).to have_tag "input#delay-slider", :with => {:value => 40}
