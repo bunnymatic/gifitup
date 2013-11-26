@@ -1,4 +1,4 @@
-class Image
+class ImageProcessor
 
   DEFAULT_OPTS = {
     :background => 'black',
@@ -10,7 +10,7 @@ class Image
     :delay => 60
   }
 
-  def self.generate_animation(words, opts = {})
+  def generate_animation(words, opts = {})
     opts.symbolize_keys!
     words = [words].flatten.compact
     fname,dir = generate_filename(words, opts.delete(:dest_dir))
@@ -34,24 +34,22 @@ class Image
     fname
   end
 
-  class << self
-    private
-    def generate_filename(words, destination = nil)
-      dest_dir = destination || 'public/generated/'
-      fname = temp_gif(sanitize_filename(words.join('')), dest_dir)
-      [fname, dest_dir]
-    end
+  private
+  def generate_filename(words, destination = nil)
+    dest_dir = destination || 'public/generated/'
+    fname = temp_gif(sanitize_filename(words.join('')), dest_dir)
+    [fname, dest_dir]
+  end
 
-    def temp_gif(pfx, dest_dir)
-      fname = nil
-      Dir::Tmpname.create([pfx,'.gif']) do |path|
-        fname = File.join(dest_dir, File.basename(path))
-      end
-      fname
+  def temp_gif(pfx, dest_dir)
+    fname = nil
+    Dir::Tmpname.create([pfx,'.gif']) do |path|
+      fname = File.join(dest_dir, File.basename(path))
     end
+    fname
+  end
 
-    def sanitize_filename(fname)
-      fname.gsub(/[[:punct:]]/,'').gsub(/\s+/,'_')[0..49]
-    end
+  def sanitize_filename(fname)
+    fname.gsub(/[[:punct:]]/,'').gsub(/\s+/,'_')[0..49]
   end
 end
