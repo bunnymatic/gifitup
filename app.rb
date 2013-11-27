@@ -72,7 +72,7 @@ class Animacrazy < Sinatra::Base
         }
         while (((polls-=1) > 0) && !(File.exists? outfile)) do
           sleep POLL_INTERVAL
-          s << ''
+          s.puts ' '
           s.flush
           puts "wrote #{s.pos} bytes so far"
         end
