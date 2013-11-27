@@ -22,6 +22,7 @@ describe 'Animacrazy' do
       expect(last_response.body).to have_tag 'form #delay-slider'
       expect(last_response.body).to have_tag 'form select', :with => {:name => 'font'}
       expect(last_response.body).to have_tag 'form input', :with => {:name => 'background', :type => "hidden"}
+      expect(last_response.body).to have_tag 'form input', :with => {:name => 'fill', :type => "hidden"}
     end
 
     it 'sets the default font' do
@@ -41,11 +42,13 @@ describe 'Animacrazy' do
 
     it 'sets the form data' do
       ImageProcessor.any_instance.stub(:generate_animation => '/public' + file)
-      post '/', "words" => words.join(' '), 'delay' => 40, 'font' => 'Helvetica', 'font_size' => 20
+      post '/', "words" => words.join(' '), 'delay' => 40, 'font' => 'Helvetica', 'font_size' => 20, 'background' => '#fcfcfc', 'fill' => '#fc2'
       expect(last_response.body).to have_tag "textarea", :with => {:name => 'words'}, :text => words.join(' ')
       expect(last_response.body).to have_tag "input#delay-slider", :with => {:value => 40}
       expect(last_response.body).to have_tag "input#font-size-slider", :with => {:value => 20}
       expect(last_response.body).to have_tag "select option", :with => {:selected => 'selected'}, :text => 'Helvetica'
+      expect(last_response.body).to have_tag 'form input', :with => {:name => 'background', :value => '#fcfcfc'}
+      expect(last_response.body).to have_tag 'form input', :with => {:name => 'fill', :value => '#fc2'}
     end
 
   end

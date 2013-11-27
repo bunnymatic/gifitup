@@ -9,10 +9,13 @@ form.animator action="/" method="post"
           option selected="selected" value=f #{f}
         - else
           option value=f #{f}
-  .form-group
+  .form-group.cf
     .background.color-picker
-      .color-box bg
-      input#background type="hidden" name="background" value="#{background}"
+      .color-box.left
+    .fill.color-picker
+      .color-box.right
+    input#background type="hidden" name="background" value="#{background}"
+    input#fill type="hidden" name="fill" value="#{fill}"
   .form-group
     .font-size.slider
       input#font-size-slider type="slider" name="font_size" value="#{font_size}"
