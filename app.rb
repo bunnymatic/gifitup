@@ -10,8 +10,8 @@ require 'json'
 Dir['./lib/**/*.rb'].each { |file| require file }
 Dir['./models/**/*.rb'].each { |file| require file }
 
-MAX_POLLS = 1000
-POLL_INTERVAL = 0.2
+MAX_POLLS = 500
+POLL_INTERVAL = 0.4
 
 class Animacrazy < Sinatra::Base
 
@@ -63,13 +63,16 @@ class Animacrazy < Sinatra::Base
         :async => async
       }
       polls = MAX_POLLS
+
+      headers 'Content-Type' => 'text/html'
+
       stream do |s|
         Thread.new {
           ImageProcessor.new.generate_animation(words, opts)
         }
         while (((polls-=1) > 0) && !(File.exists? outfile)) do
           sleep POLL_INTERVAL
-          s.puts ' '
+          s.puts ''
           s.flush
           puts "wrote #{s.pos} bytes so far"
         end
