@@ -58,6 +58,24 @@ footer {
 }
 
 
+.cf:before,
+.cf:after {
+  content: " "; /* 1 */
+  display: table; /* 2 */
+}
+
+.cf:after {
+  clear: both;
+}
+
+/**
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+.cf {
+  *zoom: 1;
+}
+
 .clear { /* generic container (i.e. div) for floating buttons */
   overflow: hidden;
   width: 100%;
@@ -311,15 +329,34 @@ header h1 span {
   background-position: -40px -60px;
 }
 
-.color-box {
-  line-height: 40px;
-  height: 40px;
-  border: 1px solid white;
-  -moz-border-radius: 10px;
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
+.color-box.left {
+  -webkit-border-top-left-radius: 10px;
+  -webkit-border-bottom-left-radius: 10px;
+  -moz-border-radius-topleft: 10px;
+  -moz-border-radius-bottomleft: 10px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
 
+.color-box.right {
+  -webkit-border-top-right-radius: 10px;
+  -webkit-border-bottom-right-radius: 10px;
+  -moz-border-radius-topright: 10px;
+  -moz-border-radius-bottomright: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.color-box {
+  float:left;
+  cursor:pointer;
+  line-height: 40px;
+  height: 40px;
+  width:49.9%;
+  border: #999 solid 1px;
+  outline: #222 solid 1px;
+
+}
 .colpick {
   height: 200px;
 }

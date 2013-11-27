@@ -37,11 +37,20 @@ $(function() {
       skin: 'c5'
     });
 
-    var setBackground = function(bg) {
-      if (bg) {
-        $('#background').val(bg);
+    var setColor = function(elId,c) {
+      if (c) {
+        $('#'+elId).val(c);
       }
     };
+
+    var setBackground = function(bg) {
+      setColor('background', bg);
+    };
+
+    var setFill = function(fill) {
+      setColor('fill', fill);
+    };
+
 
     var syncColorBoxes = function() {
       var bg = $('#background').val();
@@ -49,8 +58,9 @@ $(function() {
         $('.background .color-box').css('background-color', bg);
       }
       var fg = $('#fill').val();
+      console.log(fg);
       if (fg) {
-        $('.fill .color-box').css('background-color', bg);
+        $('.fill .color-box').css('background-color', fg);
       }
     };
 
@@ -58,12 +68,25 @@ $(function() {
 	    colorScheme:'dark',
       submit:0,
 	    layout:'hex',
-	    color:'ff8800',
+	    color:'ff00ff',
 	    onChange:function(hsb,hex,rgb, fromColorSet) {
         var c = '#' + hex;
         var el = $('.background .color-box');
 		    $(el).css('backgroundColor', c);
         setBackground(c);
+	    }
+    });
+
+    $('.fill .color-box').colpick({
+	    colorScheme:'dark',
+      submit:0,
+	    layout:'hex',
+	    color:'cccccc',
+	    onChange:function(hsb,hex,rgb, fromColorSet) {
+        var c = '#' + hex;
+        var el = $('.fill .color-box');
+		    $(el).css('backgroundColor', c);
+        setFill(c);
 	    }
     });
 

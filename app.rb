@@ -25,6 +25,7 @@ class Animacrazy < Sinatra::Base
     delay = params['delay']
     font_size = params['font_size']
     background = params['background'] || '#00000'
+    fill = params['fill'] || '#ffffff'
     frames = []
     if words && (words.length >= 1)
       opts = {
@@ -32,7 +33,8 @@ class Animacrazy < Sinatra::Base
         :font => font,
         :dest_dir => storage_directory,
         :pointsize => font_size,
-        :background => background
+        :background => background,
+        :fill => fill
       }
       anim = ImageProcessor.new.generate_animation(words, opts)
       frames = [asset_filename(anim)]
@@ -41,7 +43,7 @@ class Animacrazy < Sinatra::Base
     locals = {
       :frames => frames,
       :fonts => @fonts
-    }.merge(params.slice(*%w(words font delay font_size background)).symbolize_keys)
+    }.merge(params.slice(*%w(words font delay font_size background fill)).symbolize_keys)
 
     slim :index, :locals => locals
   end
