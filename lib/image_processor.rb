@@ -9,7 +9,6 @@ class ImageProcessor
     :pointsize => 72,
     :size => '400x400',
     :delay => 60,
-    :unsharp => "0x0.8"
   }
 
   def generate_frame(word, opts)
