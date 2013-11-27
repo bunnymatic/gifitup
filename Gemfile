@@ -12,6 +12,7 @@ end
 group :development do
   gem 'rerun'
   gem 'tux'
+  gem 'pry'
 end
 
 group :test do

@@ -13,16 +13,11 @@ class ImageProcessor
   }
 
   def generate_frame(word, opts)
-    opts.symbolize_keys!
-    fname,dir = generate_filename(word, opts.delete(:dest_dir))
-    FileUtils.mkdir_p(dir)
-  end
 
-  def generate_animation(words, opts = {})
-    opts.symbolize_keys!
-    words = [words].flatten.compact
-    fname,dir = generate_filename(words, opts.delete(:dest_dir))
-    FileUtils.mkdir_p(dir)
+    tmpdir = Dir.mktmpdir
+
+    opts = opts.symbolize_keys
+    fname = generate_filename(word, tmpdir)
 
     opts = DEFAULT_OPTS.merge(opts)
     opts[:pointsize] = 6 if opts[:pointsize].to_i < 6
@@ -32,34 +27,46 @@ class ImageProcessor
     if src_file
       opts[:background] = 'transparent'
     end
-    r = MojoMagick::convert(nil, fname) do |c|
+    opts.delete(:delay)
+    r = MojoMagick::convert(src_file, fname) do |c|
       c.resize resize
       c.gravity 'center'
       c.extent extent
-      c.delay opts.delete(:delay)
+      opts.each do |opt,val|
+        c.send(opt, val)
+      end
+      if src_file
+        c.annotate word
+      else
+        c.label word
+      end
+    end
+    fname
+  end
+
+  def generate_animation(words, opts = {})
+    opts = opts.symbolize_keys
+    words = [words].flatten.compact
+    dest_dir = opts.delete(:dest_dir)
+    FileUtils.mkdir_p(dest_dir)
+    fname = generate_filename(words, dest_dir)
+    frames = words.map{|w| generate_frame(w, opts)}
+    opts = DEFAULT_OPTS.merge(opts)
+    MojoMagick::convert(nil,fname) do |c|
+      c.delay (opts[:delay] || 0)
       c.loop 0
-      words.each do |w|
-        opts[:label] = w
-        c.image_block do
-          if src_file
-            c.resize resize
-            c.extent extent
-            c.file src_file
-          end
-          opts.each do |opt,val|
-            c.send(opt, val)
-          end
-        end
+      frames.each do |f|
+        c.file f
       end
     end
     fname
   end
 
   private
-  def generate_filename(words, destination = nil)
-    dest_dir = destination || 'public/generated/'
-    fname = temp_gif(sanitize_filename(words.join('')), dest_dir)
-    [fname, dest_dir]
+  def generate_filename(words, destination)
+    dest_dir = destination
+    fname = temp_gif(sanitize_filename([words].flatten.join('')), dest_dir)
+    fname
   end
 
   def temp_gif(pfx, dest_dir)
