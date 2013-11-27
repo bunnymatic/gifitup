@@ -12,6 +12,12 @@ class ImageProcessor
     :unsharp => "0x0.8"
   }
 
+  def generate_frame(word, opts)
+    opts.symbolize_keys!
+    fname,dir = generate_filename(word, opts.delete(:dest_dir))
+    FileUtils.mkdir_p(dir)
+  end
+
   def generate_animation(words, opts = {})
     opts.symbolize_keys!
     words = [words].flatten.compact
@@ -32,14 +38,14 @@ class ImageProcessor
       c.extent extent
       c.delay opts.delete(:delay)
       c.loop 0
-
       words.each do |w|
         opts[:label] = w
         c.image_block do
-          c.resize resize
-          c.extent extent
-          c.compose 'Multiply'
-          c.file src_file
+          if src_file
+            c.resize resize
+            c.extent extent
+            c.file src_file
+          end
           opts.each do |opt,val|
             c.send(opt, val)
           end
