@@ -48,8 +48,8 @@ class Animacrazy < Sinatra::Base
     end
 
     frames = []
-    processor = ImageProcessor.new
     if words && (words.length >= 1)
+      processor = ImageProcessor.new
       outfile = processor.generate_filename( words, storage_directory)
 
       opts = {
@@ -64,7 +64,7 @@ class Animacrazy < Sinatra::Base
       }
       polls = MAX_POLLS
 
-      headers 'Content-Type' => 'text/html'
+      headers 'Content-Type' => 'text/html;charset=utf-8'
 
       stream do |s|
         Thread.new {
@@ -72,8 +72,7 @@ class Animacrazy < Sinatra::Base
         }
         while (((polls-=1) > 0) && !(File.exists? outfile)) do
           sleep POLL_INTERVAL
-          s.puts ''
-          s.flush
+          s << ''
           puts "wrote #{s.pos} bytes so far"
         end
         puts "Awake"
