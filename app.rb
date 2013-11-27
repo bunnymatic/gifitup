@@ -26,6 +26,7 @@ class Animacrazy < Sinatra::Base
     font_size = params['font_size']
     background = params['background'] || '#00000'
     fill = params['fill'] || '#ffffff'
+    async = params['async']
     file = nil
     if params.has_key? 'file'
       dest = File.join(settings.upload_directory, params['file'][:filename])
@@ -46,7 +47,8 @@ class Animacrazy < Sinatra::Base
         :pointsize => font_size,
         :background => background,
         :fill => fill,
-        :background_file => file
+        :background_file => file,
+        :async => async
       }
       anim = ImageProcessor.new.generate_animation(words, opts)
       frames = [asset_filename(anim)]
