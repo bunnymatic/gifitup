@@ -12,11 +12,12 @@ class ImageProcessor
   }
 
   def generate_frame(word, opts)
-
-    tmpdir = Dir.mktmpdir
-
+    fname = opts.delete(:tempname)
+    unless fname
+      tmpdir = Dir.mktmpdir
+      fname = generate_filename(word, tmpdir)
+    end
     opts = opts.symbolize_keys
-    fname = generate_filename(word, tmpdir)
 
     opts = DEFAULT_OPTS.merge(opts)
     opts[:pointsize] = 6 if opts[:pointsize].to_i < 6
@@ -45,12 +46,30 @@ class ImageProcessor
 
   def generate_animation(words, opts = {})
     opts = opts.symbolize_keys
+    async = opts.delete(:async)
     words = [words].flatten.compact
     dest_dir = opts.delete(:dest_dir)
     FileUtils.mkdir_p(dest_dir)
     fname = generate_filename(words, dest_dir)
-    frames = words.map{|w| generate_frame(w, opts)}
+
+    if async
+      threads = []
+      frames = words.map do |word|
+        tmpdir = Dir.mktmpdir
+        tmpname = generate_filename(word, tmpdir)
+        threads << Thread.new {
+          generate_frame(word, opts.merge({:tempname => tmpname} ))
+        }
+        tmpname
+      end
+      threads.map(&:join)
+    else
+      frames = words.map do |word|
+        generate_frame(word, opts)
+      end
+    end
     opts = DEFAULT_OPTS.merge(opts)
+
     MojoMagick::convert(nil,fname) do |c|
       c.delay (opts[:delay] || 0)
       c.loop 0
