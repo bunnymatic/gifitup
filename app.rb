@@ -26,7 +26,7 @@ class Animacrazy < Sinatra::Base
     font_size = params['font_size']
     background = params['background'] || '#00000'
     fill = params['fill'] || '#ffffff'
-    async = params['async']
+    async = false # params['async']
     file = nil
     if params.has_key? 'file'
       dest = File.join(settings.upload_directory, params['file'][:filename])

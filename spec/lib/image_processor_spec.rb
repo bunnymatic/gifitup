@@ -3,7 +3,7 @@ require 'spec_helper'
 describe ImageProcessor do
   let(:processor) { ImageProcessor.new }
   it '.generate_anim calls convert with the right filename' do
-    MojoMagick.should_receive(:convert).with( nil, /public\/generated\/its_like_this/ ).at_least(1).times
+    MojoMagick.should_receive(:convert).at_least(2).times
     processor.generate_animation "it's like this"
   end
 

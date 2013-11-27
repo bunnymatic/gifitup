@@ -48,10 +48,11 @@ class ImageProcessor
     opts = opts.symbolize_keys
     async = opts.delete(:async)
     words = [words].flatten.compact
-    dest_dir = opts.delete(:dest_dir)
+    dest_dir = opts.delete(:dest_dir) || 'public/generated'
     FileUtils.mkdir_p(dest_dir)
     fname = generate_filename(words, dest_dir)
 
+    # this pins the memory usage on heroku - maybe we shouldn't allow this
     if async
       threads = []
       frames = words.map do |word|
