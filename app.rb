@@ -65,6 +65,7 @@ class Animacrazy < Sinatra::Base
       polls = MAX_POLLS
 
       headers 'Content-Type' => 'text/html;charset=utf-8'
+      headers 'Transfer-Encoding' => 'chunked'
 
       stream do |s|
         Thread.new {
