@@ -1,13 +1,15 @@
 class ImageProcessor
 
   DEFAULT_OPTS = {
+    :background_file => nil,
     :background => 'black',
     :fill => 'white',
     :gravity => 'center',
     :font => 'Helvetica-Bold',
     :pointsize => 72,
-    :size => '500x500',
-    :delay => 60
+    :size => '400x400',
+    :delay => 60,
+    :unsharp => "0x0.8"
   }
 
   def generate_animation(words, opts = {})
@@ -18,13 +20,26 @@ class ImageProcessor
 
     opts = DEFAULT_OPTS.merge(opts)
     opts[:pointsize] = 6 if opts[:pointsize].to_i < 6
-
-    r = MojoMagick::convert(nil,fname) do |c|
+    src_file = opts.delete(:background_file)
+    resize = (opts[:size] + '^')
+    extent = opts[:size]
+    if src_file
+      opts[:background] = 'transparent'
+    end
+    r = MojoMagick::convert(nil, fname) do |c|
+      c.resize resize
+      c.gravity 'center'
+      c.extent extent
       c.delay opts.delete(:delay)
       c.loop 0
+
       words.each do |w|
         opts[:label] = w
         c.image_block do
+          c.resize resize
+          c.extent extent
+          c.compose 'Multiply'
+          c.file src_file
           opts.each do |opt,val|
             c.send(opt, val)
           end

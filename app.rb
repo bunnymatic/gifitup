@@ -12,7 +12,7 @@ class Animacrazy < Sinatra::Base
   set :static, true
   set :root, File.dirname(__FILE__)
   set :public_folder, 'public'
-
+  set :upload_directory, 'public/uploads'
   get '/' do
     fetch_fonts
     slim :index, :layout => :layout, :locals => {:frames => nil, :background => '#000000', :fonts => @fonts, :font => Font.default.name, :delay => 0.40 }
@@ -26,6 +26,17 @@ class Animacrazy < Sinatra::Base
     font_size = params['font_size']
     background = params['background'] || '#00000'
     fill = params['fill'] || '#ffffff'
+    file = nil
+    if params.has_key? 'file'
+      dest = File.join(settings.upload_directory, params['file'][:filename])
+      src = params['file'][:tempfile]
+      FileUtils.mkdir_p(settings.upload_directory)
+      File.open(dest, "w") do |f|
+        f.write(File.open(src).read)
+      end
+      file = dest
+    end
+
     frames = []
     if words && (words.length >= 1)
       opts = {
@@ -34,7 +45,8 @@ class Animacrazy < Sinatra::Base
         :dest_dir => storage_directory,
         :pointsize => font_size,
         :background => background,
-        :fill => fill
+        :fill => fill,
+        :background_file => file
       }
       anim = ImageProcessor.new.generate_animation(words, opts)
       frames = [asset_filename(anim)]
