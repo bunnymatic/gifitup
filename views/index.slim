@@ -7,24 +7,8 @@
 - background ||= '#00000'
 - fill ||= '#ffffff'
 
-section.nav
-  .instructions
-    .button.huh href="#"
-      | ?
-      #instructions
-        .content
-          p type in some words
-          p get an animated gif
-  .gallery
-    .button
-      == "&amp;"
-      #gallery
-        .content
-          p
-            | check out the
-            '
-            a href="/gallery" gallery
-
+.logo
+  img src='/images/gifitup_logo.png'
 section.word-form
   == slim :image_form, :locals => {:delay => delay, :fill => fill, :background => background, :fonts => fonts, :words => words, :font => font, :font_size => font_size}
 
