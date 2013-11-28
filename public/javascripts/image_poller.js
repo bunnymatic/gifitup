@@ -3,8 +3,9 @@
 */
 $.imagePollerDefaults = {
   spinner: 'img-spinner',
-  maximumPolls: 100,
-  pollInterval: 0.3,
+  maximumPolls: 300,
+  pollInterval: 0.5,
+  logarithmic: true
 };
 
 $.fn.imagePoller = function( method ) {

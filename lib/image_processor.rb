@@ -57,10 +57,17 @@ class ImageProcessor
     FileUtils.mkdir_p(dest_dir)
 
     # this pins the memory usage on heroku - maybe we shouldn't allow this
+
+    # resize the original image first
+    tmpdir = Dir.mktmpdir
+    if opts[:background_file] 
+      new_base = generate_filename('bg', tmpdir)
+      MojoMagick::resize(opts[:background_file], new_base, :width => 400, :height => 400, :fill => true)
+      opts[:background_file] = new_base
+    end
     if async
       threads = []
       frames = words.map do |word|
-        tmpdir = Dir.mktmpdir
         tmpname = generate_filename(word, tmpdir)
         threads << Thread.new {
           generate_frame(word, opts.merge({:tempname => tmpname} ))
