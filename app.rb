@@ -89,7 +89,7 @@ class Animacrazy < Sinatra::Base
   end
 
   def asset_filename(fname)
-    fname.gsub(/public/,'').gsub(/^\/*/,'/')
+    fname.gsub(/^\/?public\//,'/').gsub(/^\/*/,'/')
   end
 
   def fetch_fonts
