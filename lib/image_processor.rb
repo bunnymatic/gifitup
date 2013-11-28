@@ -95,7 +95,7 @@ class ImageProcessor
   def generate_filename(words, destination)
     dest_dir = destination
     pfx = [words].flatten.compact.uniq.join('')[0..25]
-    fname = temp_gif(sanitize_filename(pfx, dest_dir))
+    fname = temp_gif(sanitize_filename(pfx), dest_dir)
     fname
   end
 
