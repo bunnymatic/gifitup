@@ -19,5 +19,6 @@
 \.#*
 \.sass-cache
 /public/generated
+/public/uploads
 # Ignore coverage data.
 /coverage
