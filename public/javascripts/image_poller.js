@@ -5,7 +5,7 @@ $.imagePollerDefaults = {
   spinner: 'img-spinner',
   maximumPolls: 300,
   pollInterval: 1,
-  onPollCallback: function(status) { console.log('Poll Count: ', status); console.log(this); },
+  onPoll: function(status) { console.log('Poll Count: ', status); console.log(this); },
   logarithmic: true
 };
 
@@ -13,6 +13,7 @@ $.fn.imagePoller = function( method ) {
   var inArgs = arguments;
   var methods = {
     init: function(options) {
+      console.log(options);
       var o = $.extend($.imagePollerDefaults, options);
       var $target = $(this);
       $(this).hide();
@@ -36,9 +37,12 @@ $.fn.imagePoller = function( method ) {
               if(interval) {
                 clearInterval(interval);
               }
+              if (found && o.onSuccess && (typeof o.onSuccess === 'function')) {
+                o.onSuccess.apply($target, []);
+              }
             } else {
-              if (o.onPollCallback && (typeof o.onPollCallback === 'function')) {
-                o.onPollCallback.apply($target, [{numTries:ctr, maxNumTries: o.maximumPolls, file: href}]);
+              if (o.onPoll && (typeof o.onPoll === 'function')) {
+                o.onPoll.apply($target, [{numTries:ctr, maxNumTries: o.maximumPolls, file: href}]);
               }
               $.ajax({
                 url: href,
@@ -47,7 +51,6 @@ $.fn.imagePoller = function( method ) {
                   $target.show();
                   $('#img-spinner').remove();
                   found = true;
-                  console.log('done');
                 },
                 error: function(xhr, status, error) {
                 }

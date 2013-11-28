@@ -92,7 +92,51 @@ $(function() {
 
     syncColorBoxes();
 
-    $('.frames img').imagePoller();
+    /* returned polling message looks like this
+     {
+       file: "/generated/publictransportationisforjerksandlesbians20131127-18958-1imm3mx.gif"
+       maxNumTries: 300
+       numTries: 4
+     }
+    */
+    var flash = function(msg) {
+      var $f = $('.flash');
+      if (msg) {
+        if (!$f.length) {
+          $f = $('<div>', {'class':'flash'});
+          $('.container').prepend($f);
+        }
+        $f.html(msg);
+      } else {
+        $f.remove();
+      }
+    }
+    var successCb = function() {
+      $('.flash').remove();
+    };
+
+    var pollingCb = function(pollingInfo) {
+      var mx = pollingInfo.maxNumTries;
+      var cur = pollingInfo.numTries;
+      console.log("cur vs mx ", cur, mx);
+      if (cur > mx / 30) {
+        if ( cur < mx / 15 ) {
+          flash('Boring...');
+        } else if ( cur < mx / 7 ) {
+          flash('Geez.  That server is soooo slow!');
+        } else if ( cur < mx / 4 ) {
+          flash('Maybe you should go have a cup of coffee while we work on this.');
+        } else if ( cur < mx / 2 ) {
+          flash("ARRG! These stupid computers.   Just give me my picture back!");
+        } else if ( cur >= (mx-1)) {
+          flash("Shit, man!  Things might be broke.  You could (in a separate browser) look try <a target='blank' href='"+pollingInfo.file+"'>this file</a> until it works.  Or just give up and file a bug.");
+        } else {
+          flash('Still Trying');
+        }
+      }
+    };
+
+    $('.frames img').imagePoller({onPoll:pollingCb,onSuccess: successCb });
   }
 
 

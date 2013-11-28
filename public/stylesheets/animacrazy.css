@@ -180,13 +180,18 @@ a.button:active span {
 }
 
 .flash {
+  position: fixed;
+  width: 1200px;
+  top: 200px;
+  background: #444;
   border: 1px solid #171a24;
   padding:10px;
   font-size:18px;
-  color: #1b1824;
+  color: white;
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
   border-radius: 10px;
+  text-align: center;
 }
 
 .flash.error {
