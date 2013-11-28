@@ -210,6 +210,7 @@ input[type=submit]:hover {
   width: auto;
   margin: 20px;
   text-align: center;
+  max-width: 375px;
   float:left;
 }
 
@@ -343,16 +344,15 @@ header h1 span {
   border-radius: 10px;
   overflow:hidden;
   width: auto;
-  margin: 0 20px;
   text-align: center;
   float:left;
   position: relative;
+  margin: 0 20px;
 }
 .img-placeholder {
   position: relative;
   border: 1px solid #ccf;
-  margin: auto;
-  width: 400px;
+  width: 380px;
   height: 400px;
 }
 .img-placeholder .txt {
@@ -368,5 +368,5 @@ header h1 span {
 }
 #img-spinner {
   position: relative;
-  top: -120px;
+  top: -100px;
 }
