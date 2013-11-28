@@ -10,10 +10,8 @@ html
   body
     header.header
     .container
-      section
-        #spinner
       == yield
     footer.footer
 
-  - %w(//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js /javascripts/spin.min.js //cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js //cdnjs.cloudflare.com/ajax/libs/select2/3.4.4/select2.min.js /javascripts/jquery.slider.min.js /javascripts/spinit.js /javascripts/colpick.js /javascripts/animacrazy.js).each do |js|
+  - %w(//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js /javascripts/spin.min.js //cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js //cdnjs.cloudflare.com/ajax/libs/select2/3.4.4/select2.min.js /javascripts/jquery.slider.min.js /javascripts/spinit.js /javascripts/colpick.js /javascripts/image_poller.js /javascripts/animacrazy.js).each do |js|
     script type="text/javascript" src=js

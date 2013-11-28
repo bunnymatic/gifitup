@@ -46,11 +46,15 @@ class ImageProcessor
 
   def generate_animation(words, opts = {})
     opts = opts.symbolize_keys
+    outfile = opts.delete(:output_file)
     async = opts.delete(:async)
     words = [words].flatten.compact
-    dest_dir = opts.delete(:dest_dir) || 'public/generated'
+    unless outfile
+      dest_dir = opts.delete(:dest_dir) || 'public/generated'
+      outfile = generate_filename(words, dest_dir)
+    end
+    dest_dir = File::dirname(outfile)
     FileUtils.mkdir_p(dest_dir)
-    fname = generate_filename(words, dest_dir)
 
     # this pins the memory usage on heroku - maybe we shouldn't allow this
     if async
@@ -71,22 +75,23 @@ class ImageProcessor
     end
     opts = DEFAULT_OPTS.merge(opts)
 
-    MojoMagick::convert(nil,fname) do |c|
+    MojoMagick::convert(nil,outfile) do |c|
       c.delay (opts[:delay] || 0)
       c.loop 0
       frames.each do |f|
         c.file f
       end
     end
-    fname
+    outfile
   end
 
-  private
   def generate_filename(words, destination)
     dest_dir = destination
     fname = temp_gif(sanitize_filename([words].flatten.join('')), dest_dir)
     fname
   end
+
+  private
 
   def temp_gif(pfx, dest_dir)
     fname = nil

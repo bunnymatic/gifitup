@@ -3,16 +3,22 @@ require 'bundler'
 Bundler.require :default
 
 require 'sinatra/base'
+
 require 'json'
 
 Dir['./lib/**/*.rb'].each { |file| require file }
 Dir['./models/**/*.rb'].each { |file| require file }
 
+MAX_POLLS = 500
+POLL_INTERVAL = 0.4
+
 class Animacrazy < Sinatra::Base
+
   set :static, true
   set :root, File.dirname(__FILE__)
   set :public_folder, 'public'
   set :upload_directory, 'public/uploads'
+
   get '/' do
     fetch_fonts
     slim :index, :layout => :layout, :locals => {:frames => nil, :background => '#000000', :fonts => @fonts, :font => Font.default.name, :delay => 0.40 }
@@ -40,26 +46,37 @@ class Animacrazy < Sinatra::Base
 
     frames = []
     if words && (words.length >= 1)
+      processor = ImageProcessor.new
+      outfile = processor.generate_filename( words, storage_directory)
+
       opts = {
         :delay => delay.to_f * 100.0,
         :font => font,
-        :dest_dir => storage_directory,
         :pointsize => font_size,
         :background => background,
         :fill => fill,
         :background_file => file,
+        :output_file => outfile,
         :async => async
       }
-      anim = ImageProcessor.new.generate_animation(words, opts)
-      frames = [asset_filename(anim)]
+
+      Thread.new {
+        ImageProcessor.new.generate_animation(words, opts)
+      }
+      frames = [asset_filename(outfile)]
+      locals = {
+        :frames => frames,
+        :fonts => @fonts
+      }.merge(params.slice(*%w(words font delay font_size background fill)).symbolize_keys)
+      slim :index, :locals => locals
+    else
+      locals = {
+        :frames => frames,
+        :fonts => @fonts
+      }.merge(params.slice(*%w(words font delay font_size background fill)).symbolize_keys)
+
+      slim :index, :locals => locals
     end
-
-    locals = {
-      :frames => frames,
-      :fonts => @fonts
-    }.merge(params.slice(*%w(words font delay font_size background fill)).symbolize_keys)
-
-    slim :index, :locals => locals
   end
 
   get '/gallery' do

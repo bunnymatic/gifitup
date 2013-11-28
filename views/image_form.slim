@@ -1,9 +1,9 @@
 form.animator action="/" method="post" enctype='multipart/form-data'
-  .container.words
+  .chunk-container.words
     .form-group
       textarea name="words"
         = ([words].flatten||[]).join(' ')
-  .container.settings
+  .chunk-container.settings
     .form-group
       select.select2 name="font"
         - fonts.map(&:name).each do |f|

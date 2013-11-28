@@ -91,6 +91,8 @@ $(function() {
     });
 
     syncColorBoxes();
+
+    $('.frames img').imagePoller();
   }
 
 
