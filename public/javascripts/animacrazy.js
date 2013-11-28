@@ -25,7 +25,8 @@ $(function() {
       step: 0.1,
       round: 1,
       dimension: ' s',
-      skin: 'c5'
+      skin: 'c5',
+      limits: false
     });
 
     $('#font-size-slider').slider({
@@ -34,7 +35,8 @@ $(function() {
       step: 1,
       round: 0,
       dimension: ' px',
-      skin: 'c5'
+      skin: 'c5',
+      limits: false
     });
 
     var setColor = function(elId,c) {

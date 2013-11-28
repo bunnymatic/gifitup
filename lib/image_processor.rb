@@ -6,7 +6,7 @@ class ImageProcessor
     :fill => 'white',
     :gravity => 'center',
     :font => 'Helvetica-Bold',
-    :pointsize => 72,
+    :pointsize => 64,
     :size => '400x400',
     :delay => 60,
   }
@@ -94,7 +94,8 @@ class ImageProcessor
 
   def generate_filename(words, destination)
     dest_dir = destination
-    fname = temp_gif(sanitize_filename([words].flatten.join('')), dest_dir)
+    pfx = [words].flatten.compact.uniq.join('')[0..25]
+    fname = temp_gif(sanitize_filename(pfx, dest_dir)
     fname
   end
 

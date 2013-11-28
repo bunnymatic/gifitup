@@ -338,6 +338,10 @@ header h1 span {
   letter-spacing: 1px;
 }
 .frame, .img-placeholder {
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  overflow:hidden;
   width: auto;
   margin: 0 20px;
   text-align: center;
