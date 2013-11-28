@@ -13,7 +13,16 @@ section.word-form
   == slim :image_form, :locals => {:delay => delay, :fill => fill, :background => background, :fonts => fonts, :words => words, :font => font, :font_size => font_size}
 
 section.frames
-  - if frames && frames.count
+  - if frames && (frames.length > 0)
     - frames.each do |f|
       .frame
+        #img-spinner
         img src=f
+  - else
+    .img-placeholder
+      .txt
+        | your
+        br
+        | picture
+        br
+        | here

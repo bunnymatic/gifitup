@@ -3,7 +3,6 @@ require 'bundler'
 Bundler.require :default
 
 require 'sinatra/base'
-require 'sinatra/streaming'
 
 require 'json'
 
@@ -14,8 +13,6 @@ MAX_POLLS = 500
 POLL_INTERVAL = 0.4
 
 class Animacrazy < Sinatra::Base
-
-  helpers Sinatra::Streaming
 
   set :static, true
   set :root, File.dirname(__FILE__)
@@ -62,30 +59,16 @@ class Animacrazy < Sinatra::Base
         :output_file => outfile,
         :async => async
       }
-      polls = MAX_POLLS
 
-      headers 'Content-Type' => 'text/html;charset=utf-8', 'Transfer-Encoding' => 'chunked'
-
-      stream do |s|
-        Thread.new {
-          ImageProcessor.new.generate_animation(words, opts)
-        }
-        while (((polls-=1) > 0) && !(File.exists? outfile)) do
-          sleep POLL_INTERVAL
-          s.puts ' '
-          s.flush
-          puts "wrote #{s.pos} bytes so far"
-        end
-        puts "Awake"
-
-        frames = [asset_filename(outfile)]
-        locals = {
-          :frames => frames,
-          :fonts => @fonts
-        }.merge(params.slice(*%w(words font delay font_size background fill)).symbolize_keys)
-        s.puts(slim :index, :locals => locals)
-        s.flush
-      end
+      Thread.new {
+        ImageProcessor.new.generate_animation(words, opts)
+      }
+      frames = [asset_filename(outfile)]
+      locals = {
+        :frames => frames,
+        :fonts => @fonts
+      }.merge(params.slice(*%w(words font delay font_size background fill)).symbolize_keys)
+      slim :index, :locals => locals
     else
       locals = {
         :frames => frames,
