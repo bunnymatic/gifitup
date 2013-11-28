@@ -4,7 +4,8 @@
 $.imagePollerDefaults = {
   spinner: 'img-spinner',
   maximumPolls: 300,
-  pollInterval: 0.5,
+  pollInterval: 1,
+  onPollCallback: function(status) { console.log('Poll Count: ', status); console.log(this); },
   logarithmic: true
 };
 
@@ -28,17 +29,17 @@ $.fn.imagePoller = function( method ) {
         var found = false;
         var interval = null;
         var ctr = 0;
-        console.log(href, found, ctr);
         var interval = setInterval(
           function() {
             ctr ++;
-            console.log('status:', found, ctr, interval);
-
             if (found || ctr > o.maximumPolls) {
               if(interval) {
                 clearInterval(interval);
               }
             } else {
+              if (o.onPollCallback && (typeof o.onPollCallback === 'function')) {
+                o.onPollCallback.apply($target, [{numTries:ctr, maxNumTries: o.maximumPolls, file: href}]);
+              }
               $.ajax({
                 url: href,
                 success: function(status, data, xhr) {
@@ -49,7 +50,6 @@ $.fn.imagePoller = function( method ) {
                   console.log('done');
                 },
                 error: function(xhr, status, error) {
-                  console.log('again');
                 }
               });
             }
