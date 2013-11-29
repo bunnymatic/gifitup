@@ -180,10 +180,10 @@ a.button:active span {
 }
 
 .flash {
-  position: fixed;
+  position: absolute;
   width: 1200px;
   top: 200px;
-  background: #444;
+  background: rgba(120,120,120,0.7);
   border: 1px solid #171a24;
   padding:10px;
   font-size:18px;
