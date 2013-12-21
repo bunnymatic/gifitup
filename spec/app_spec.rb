@@ -37,7 +37,7 @@ describe 'Gifitup' do
     it 'generates and shows an animation' do
       ImageProcessor.any_instance.should_receive(:generate_animation).with(words, an_instance_of(Hash)).and_return('/public' + file)
       post '/', "words" => words.join(' ')
-      expect(last_response.body).to have_tag(".frames .frame img")
+      expect(last_response.body).to have_tag(".results .frame img")
     end
 
     it 'sets the form data' do
