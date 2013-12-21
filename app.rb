@@ -12,7 +12,7 @@ Dir['./models/**/*.rb'].each { |file| require file }
 MAX_POLLS = 500
 POLL_INTERVAL = 0.4
 
-class Animacrazy < Sinatra::Base
+class Gifitup < Sinatra::Base
 
   set :static, true
   set :root, File.dirname(__FILE__)

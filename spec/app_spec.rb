@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe 'Animacrazy' do
+describe 'Gifitup' do
   include Rack::Test::Methods
 
   def app
-    Animacrazy
+    Gifitup
   end
 
   describe 'get /' do
