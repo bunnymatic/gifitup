@@ -39,8 +39,8 @@ If you get there, you're probably in bizness
 
 
     cd <directory where i put my projects/apps>
-    git clone git@github.com:bunnymatic/animacrazy.git
-    cd animacrazy
+    git clone git@github.com:bunnymatic/gifitup.git
+    cd gifitup
     bundle
     ./rerun.sh
 
