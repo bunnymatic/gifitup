@@ -12,39 +12,45 @@ class ImageProcessor
   }
 
   def generate_frame(word, opts)
-    fname = opts.delete(:tempname)
-    unless fname
-      tmpdir = Dir.mktmpdir
-      fname = generate_filename(word, tmpdir)
-    end
-    opts = opts.symbolize_keys
+    begin
+      fname = opts.delete(:tempname)
+      unless fname
+        tmpdir = Dir.mktmpdir
+        fname = generate_filename(word, tmpdir)
+      end
+      opts = opts.symbolize_keys
 
-    opts = DEFAULT_OPTS.merge(opts)
-    opts[:pointsize] = 6 if opts[:pointsize].to_i < 6
-    src_file = opts.delete(:background_file)
-    resize = (opts[:size] + '^')
-    extent = opts[:size]
-    if src_file
-      opts[:background] = 'transparent'
-    end
-    opts.delete(:delay)
-    r = MojoMagick::convert(src_file, fname) do |c|
-      c.resize resize
-      c.gravity 'center'
-      c.extent extent
-      opts.each do |opt,val|
-        c.send(opt, val)
-      end
+      opts = DEFAULT_OPTS.merge(opts)
+      opts[:pointsize] = 6 if opts[:pointsize].to_i < 6
+      src_file = opts.delete(:background_file)
+      resize = (opts[:size] + '^')
+      extent = opts[:size]
       if src_file
-        c.annotate word
-      else
-        c.label word
+        opts[:background] = 'transparent'
       end
+      opts.delete(:delay)
+      opts.delete(:font)
+      r = MojoMagick::convert(src_file, fname) do |c|
+        c.resize resize
+        c.gravity 'center'
+        c.extent extent
+        opts.each do |opt,val|
+          c.send(opt, val)
+        end
+        if src_file
+          c.annotate word
+        else
+          c.label word
+        end
+      end
+      fname
+    rescue Exception => ex
+      puts "ACK", ex
     end
-    fname
   end
 
   def generate_animation(words, opts = {})
+
     opts = opts.symbolize_keys
     outfile = opts.delete(:output_file)
     async = opts.delete(:async)
@@ -60,7 +66,7 @@ class ImageProcessor
 
     # resize the original image first
     tmpdir = Dir.mktmpdir
-    if opts[:background_file] 
+    if opts[:background_file]
       new_base = generate_filename('bg', tmpdir)
       MojoMagick::resize(opts[:background_file], new_base, :width => 400, :height => 400, :fill => true)
       opts[:background_file] = new_base

@@ -12,4 +12,5 @@ require File.join(File.dirname(__FILE__), '..', 'app.rb')
 set :environment, :test
 
 RSpec.configure do |config|
+  config.include RSpecHtmlMatchers
 end
