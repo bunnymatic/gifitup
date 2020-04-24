@@ -35,7 +35,8 @@ class Gifitup < Sinatra::Base
     async = false # params['async']
     file = nil
     if params.has_key? 'file'
-      file = save_file(params['file'][:filename])
+      file_info = params[:file]
+      file = save_file(file_info[:filename], file_info[:tempfile])
     end
 
     frames = []
@@ -91,11 +92,11 @@ class Gifitup < Sinatra::Base
     File.join(settings.public_folder, 'generated')
   end
 
-  def save_file(destination_fname, uploaded_fname)
+  def save_file(destination_fname, uploaded_file)
     dest = File.join(settings.upload_directory, destination_fname)
     FileUtils.mkdir_p(settings.upload_directory)
     File.open(dest, "w") do |f|
-      f.write(File.open(uploaded_fname).read)
+      f.write(uploaded_file.read)
     end
     dest
   end
