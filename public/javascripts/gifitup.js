@@ -138,7 +138,7 @@ $(function() {
       }
     };
 
-    $('.frames img').imagePoller({onPoll:pollingCb,onSuccess: successCb });
+    $('.frame img').imagePoller({onPoll:pollingCb,onSuccess: successCb });
   }
 
 

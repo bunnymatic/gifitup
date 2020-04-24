@@ -35,13 +35,7 @@ class Gifitup < Sinatra::Base
     async = false # params['async']
     file = nil
     if params.has_key? 'file'
-      dest = File.join(settings.upload_directory, params['file'][:filename])
-      src = params['file'][:tempfile]
-      FileUtils.mkdir_p(settings.upload_directory)
-      File.open(dest, "w") do |f|
-        f.write(File.open(src).read)
-      end
-      file = dest
+      file = save_file(params['file'][:filename])
     end
 
     frames = []
@@ -64,19 +58,12 @@ class Gifitup < Sinatra::Base
         ImageProcessor.new.generate_animation(words, opts)
       }
       frames = [asset_filename(outfile)]
-      locals = {
-        :frames => frames,
-        :fonts => @fonts
-      }.merge(params.slice(*%w(words font delay font_size background fill)).symbolize_keys)
-      slim :index, :locals => locals
-    else
-      locals = {
-        :frames => frames,
-        :fonts => @fonts
-      }.merge(params.slice(*%w(words font delay font_size background fill)).symbolize_keys)
-
-      slim :index, :locals => locals
     end
+    locals = {
+      :frames => frames,
+      :fonts => @fonts
+    }.merge(params.slice(*%w(words font delay font_size background fill)).symbolize_keys)
+    slim :index, :locals => locals
   end
 
   get '/gallery' do
@@ -103,4 +90,14 @@ class Gifitup < Sinatra::Base
   def storage_directory
     File.join(settings.public_folder, 'generated')
   end
+
+  def save_file(destination_fname, uploaded_fname)
+    dest = File.join(settings.upload_directory, destination_fname)
+    FileUtils.mkdir_p(settings.upload_directory)
+    File.open(dest, "w") do |f|
+      f.write(File.open(uploaded_fname).read)
+    end
+    dest
+  end
+  
 end

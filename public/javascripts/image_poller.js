@@ -50,9 +50,11 @@ $.fn.imagePoller = function( method ) {
                   $target.attr('src', href);
                   $target.show();
                   $('#img-spinner').remove();
+                  console.log("Found");
                   found = true;
                 },
                 error: function(xhr, status, error) {
+                  console.log("ERROR", status, error);
                 }
               });
             }
