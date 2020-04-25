@@ -1,11 +1,5 @@
-header
-  h1
-    span 
-      | The Gallery
-      '
-    a.home href="/" title="home"
-      == "&#8617;"
-.imgs
-  - files.each do |f|
-    .img
-      img src=f
+.gallery
+  .imgs.gallery__imgs
+    - files.each do |f|
+      .img
+        img src=f
