@@ -282,17 +282,18 @@ a.button:active span {
 }
 
 .flash {
-  position: absolute;
-  width: 85%;
-  top: 200px;
+  position: fixed;
+  width: 50%;
+  top: 0px;
+  left: 25%;
   background: rgba(120, 120, 120, 0.7);
   border: 1px solid #171a24;
   padding: 10px;
   font-size: 18px;
   color: white;
-  -moz-border-radius: 10px;
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
+  -moz-border-radius: 0 0 10px 10px;
+  -webkit-border-radius: 0 0 10px 10px;
+  border-radius: 0 0 10px 10px;
   text-align: center;
 }
 
