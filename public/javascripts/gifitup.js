@@ -1,19 +1,19 @@
-$(function() {
+$(function () {
   if ($("form.animator").length) {
     // we're on the index page
     spinner = new GIUSpinner();
 
-    $("input[type=submit]").on("click", function() {
+    $("input[type=submit]").on("click", function () {
       spinner.spin();
     });
 
-    var setTextareaFont = function(font) {
+    var setTextareaFont = function (font) {
       $("form textarea[name=words]").css("font-family", font);
     };
 
     $("select.select2").select2();
     var $fontSelect = $("select[name=font]");
-    $fontSelect.bind("change", function() {
+    $fontSelect.bind("change", function () {
       setTextareaFont($(this).val());
     });
 
@@ -26,7 +26,7 @@ $(function() {
       round: 1,
       dimension: " s",
       skin: "c5",
-      limits: false
+      limits: false,
     });
 
     $("#font-size-slider").slider({
@@ -36,24 +36,24 @@ $(function() {
       round: 0,
       dimension: " px",
       skin: "c5",
-      limits: false
+      limits: false,
     });
 
-    var setColor = function(elId, c) {
+    var setColor = function (elId, c) {
       if (c) {
         $("#" + elId).val(c);
       }
     };
 
-    var setBackground = function(bg) {
+    var setBackground = function (bg) {
       setColor("background", bg);
     };
 
-    var setFill = function(fill) {
+    var setFill = function (fill) {
       setColor("fill", fill);
     };
 
-    var syncColorBoxes = function() {
+    var syncColorBoxes = function () {
       var bg = $("#background").val();
       if (bg) {
         $(".background .color-box").css("background-color", bg);
@@ -69,12 +69,12 @@ $(function() {
       submit: 0,
       layout: "hex",
       color: "ff00ff",
-      onChange: function(hsb, hex, rgb, fromColorSet) {
+      onChange: function (hsb, hex, rgb, fromColorSet) {
         var c = "#" + hex;
         var el = $(".background .color-box");
         $(el).css("backgroundColor", c);
         setBackground(c);
-      }
+      },
     });
 
     $(".fill .color-box").colpick({
@@ -82,12 +82,12 @@ $(function() {
       submit: 0,
       layout: "hex",
       color: "cccccc",
-      onChange: function(hsb, hex, rgb, fromColorSet) {
+      onChange: function (hsb, hex, rgb, fromColorSet) {
         var c = "#" + hex;
         var el = $(".fill .color-box");
         $(el).css("backgroundColor", c);
         setFill(c);
-      }
+      },
     });
 
     syncColorBoxes();
@@ -99,7 +99,7 @@ $(function() {
        numTries: 4
      }
     */
-    var flash = function(msg) {
+    var flash = function (msg) {
       var $f = $(".flash");
       if (msg) {
         if (!$f.length) {
@@ -111,11 +111,11 @@ $(function() {
         $f.remove();
       }
     };
-    var successCb = function() {
+    var successCb = function () {
       $(".flash").remove();
     };
 
-    var pollingCb = function(pollingInfo) {
+    var pollingCb = function (pollingInfo) {
       var mx = pollingInfo.maxNumTries;
       var cur = pollingInfo.numTries;
       // console.log("cur vs mx ", cur, mx);

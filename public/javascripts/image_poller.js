@@ -5,26 +5,26 @@ $.imagePollerDefaults = {
   spinner: "img-spinner",
   maximumPolls: 300,
   pollIntervalMs: 500,
-  onPoll: function(status) {
+  onPoll: function (status) {
     console.log("Poll Count: ", status);
     console.log(this);
   },
-  logarithmic: true
+  logarithmic: true,
 };
 
-$.fn.imagePoller = function(method) {
+$.fn.imagePoller = function (method) {
   var inArgs = arguments;
   var methods = {
-    init: function(options) {
+    init: function (options) {
       var o = $.extend($.imagePollerDefaults, options);
       var $target = $(this);
       $(this).hide();
       var spinner = new GIUSpinner({
         element: o.spinner,
-        className: "img-spinner"
+        className: "img-spinner",
       });
       spinner.spin();
-      $(this).each(function(idx, el) {
+      $(this).each(function (idx, el) {
         var $this = $(this);
         if (this.tagName !== "IMG") {
           throw "This plugin should be applied to an IMG tag";
@@ -33,7 +33,7 @@ $.fn.imagePoller = function(method) {
         var found = false;
         var interval = null;
         var ctr = 0;
-        var interval = setInterval(function() {
+        var interval = setInterval(function () {
           ctr++;
           if (found || ctr > o.maximumPolls) {
             if (interval) {
@@ -45,27 +45,27 @@ $.fn.imagePoller = function(method) {
           } else {
             if (o.onPoll && typeof o.onPoll === "function") {
               o.onPoll.apply($target, [
-                { numTries: ctr, maxNumTries: o.maximumPolls, file: href }
+                { numTries: ctr, maxNumTries: o.maximumPolls, file: href },
               ]);
             }
             $.ajax({
               url: href,
-              success: function(status, data, xhr) {
+              success: function (status, data, xhr) {
                 $target.attr("src", href);
                 $target.show();
                 $("#img-spinner").remove();
                 found = true;
               },
-              error: function(xhr, status, error) {
+              error: function (xhr, status, error) {
                 console.error("ERROR", status, error);
-              }
+              },
             });
           }
         }, o.pollIntervalMs);
       });
-    }
+    },
   };
-  return this.each(function() {
+  return this.each(function () {
     // If options exist, send them to init
     // and merge with default settings
 
