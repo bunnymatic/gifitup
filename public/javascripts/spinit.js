@@ -1,4 +1,4 @@
-GIUSpinner = (function() {
+GIUSpinner = (function () {
   function GIUSpinner(opts) {
     this.opts = _.extend(
       {
@@ -18,14 +18,14 @@ GIUSpinner = (function() {
         top: "160px",
         left: "100%",
         color: "#999",
-        element: "spinner"
+        element: "spinner",
       },
       opts
     );
     this.spinner = new Spinner(this.opts);
   }
 
-  GIUSpinner.prototype.spin = function() {
+  GIUSpinner.prototype.spin = function () {
     return this.spinner.spin(
       document.getElementById(this.opts.element || "spinner")
     );
