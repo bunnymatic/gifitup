@@ -100,5 +100,5 @@ class Gifitup < Sinatra::Base
     end
     dest
   end
-  
+
 end
