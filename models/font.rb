@@ -9,9 +9,9 @@ class Font
     font_finders = [/helv/i, /verda/i, /times/i, /book/i]
     f = nil
     font_finders.each do |re|
-      f = fonts.select{|f| f.name =~ re}.first
+      f = fonts.find{|f| f.name =~ re}
       break if f
     end
-    f
+    f || fonts.first
   end
 end

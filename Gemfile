@@ -20,4 +20,6 @@ group :test do
   gem "rspec"
   gem "rack-test"
   gem 'rspec-html-matchers'
+  gem "rspec_junit_formatter"
 end
+
