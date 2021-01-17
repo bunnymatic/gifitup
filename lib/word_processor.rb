@@ -1,13 +1,15 @@
 class WordProcessor
   def initialize(words)
-    @words = [words].flatten.join(" ").strip
+    @words = [words].flatten.compact
   end
 
   def marquee
     frames = []
-    @words.length.times do
-      frames.push @words.rotate
+    current_frame = " " + @words.join(" ")
+    current_frame.length.times do
+      current_frame = current_frame.scan(/./).rotate.join
+      frames.push current_frame
     end
-    return words
+    return frames
   end
 end

@@ -10,9 +10,10 @@ group :development, :test do
 end
 
 group :development do
+  gem 'byebug'
+  gem 'irb'
   gem 'rerun'
   gem 'tux'
-  gem 'byebug'
 end
 
 group :test do
