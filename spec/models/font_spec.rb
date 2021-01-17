@@ -20,5 +20,13 @@ describe Font do
     it 'returns helvetica' do
       expect(Font.default.name).to eql('helvetica')
     end
+
+    describe 'when helvetica isn\'t available' do
+      let(:font_list) { ['whatever','whatever bold'].map{|n| MojoMagick::Font.new(:name => n)} }
+
+      it 'returns the first font' do
+        expect(Font.default.name).to eql 'whatever'
+      end
+    end
   end
 end

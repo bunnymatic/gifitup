@@ -22,3 +22,5 @@
 /public/uploads
 # Ignore coverage data.
 /coverage
+
+.byebug_history
