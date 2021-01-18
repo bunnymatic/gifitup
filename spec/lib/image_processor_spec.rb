@@ -28,7 +28,8 @@ describe ImageProcessor do
       it 'doesn\'t return HUGE filenames' do
         huge_prefix = 10.times.map{|x| 'this is the word'}.join
         clean = described_class.new(huge_prefix).generate_filename( 'xxx')
-        expect(clean.length).to equal 55
+        expect(clean.length).to be >= 55
+        expect(clean.length).to be <= 56
       end
     end
   end
