@@ -41,8 +41,8 @@ class Gifitup < Sinatra::Base
 
     frames = []
     if words && (words.length >= 1)
-      processor = ImageProcessor.new
-      outfile = processor.generate_filename( words, storage_directory)
+      processor = ImageProcessor.new(words)
+      outfile = processor.generate_filename(storage_directory)
 
       opts = {
         :delay => delay.to_f * 100.0,
@@ -56,7 +56,7 @@ class Gifitup < Sinatra::Base
       }
 
       Thread.new {
-        ImageProcessor.new.generate_animation(words, opts)
+        ImageProcessor.new(words).generate_animation(opts)
       }
       frames = [asset_filename(outfile)]
     end
@@ -100,5 +100,5 @@ class Gifitup < Sinatra::Base
     end
     dest
   end
-  
+
 end

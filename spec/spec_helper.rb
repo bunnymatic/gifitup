@@ -6,6 +6,7 @@ require 'sinatra'
 require 'rack/test'
 require 'rspec'
 require 'rspec-html-matchers'
+require 'rspec/wait'
 
 require File.join(File.dirname(__FILE__), '..', 'app.rb')
 
