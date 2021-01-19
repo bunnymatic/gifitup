@@ -28,7 +28,10 @@ describe ImageProcessor do
       it 'doesn\'t return HUGE filenames' do
         huge_prefix = 10.times.map{|x| 'this is the word'}.join
         clean = described_class.new(huge_prefix).generate_filename( 'xxx')
-        expect(clean.length).to be >= 55
+        # depending on `tmpfile` generation, this could be of different lengths
+        # but it should prove that it is far less than the words used to genereate
+        # the filename
+        expect(clean.length).to be >= 50
         expect(clean.length).to be <= 56
       end
     end
