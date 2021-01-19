@@ -17,10 +17,10 @@ group :development do
 end
 
 group :test do
-  gem "simplecov"
-  gem "rspec"
   gem "rack-test"
-  gem 'rspec-html-matchers'
+  gem "rspec"
+  gem "rspec-wait"
   gem "rspec_junit_formatter"
+  gem "simplecov"
+  gem 'rspec-html-matchers'
 end
-

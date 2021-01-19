@@ -58,6 +58,8 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.10.0)
     rspec-support (3.10.1)
+    rspec-wait (0.0.9)
+      rspec (>= 3, < 4)
     rspec_junit_formatter (0.4.1)
       rspec-core (>= 2, < 4, != 2.12.0)
     ruby2_keywords (0.0.2)
@@ -96,6 +98,7 @@ DEPENDENCIES
   rerun
   rspec
   rspec-html-matchers
+  rspec-wait
   rspec_junit_formatter
   simplecov
   sinatra

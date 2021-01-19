@@ -3,6 +3,14 @@ require 'spec_helper'
 describe 'Gifitup' do
   include Rack::Test::Methods
 
+  def mock_image_processor_for_app
+    processor_double = instance_double(ImageProcessor)
+    allow(processor_double).to receive(:generate_filename).and_return('/public'+file)
+    allow(processor_double).to receive(:generate_animation)
+    allow(ImageProcessor).to receive(:new).and_return(processor_double)
+    return processor_double
+  end
+
   def app
     Gifitup
   end
@@ -35,13 +43,20 @@ describe 'Gifitup' do
     let(:words) { %w(gif it up) }
     let(:file) { '/generated/animation.gif' }
     it 'generates and shows an animation' do
-      allow_any_instance_of(ImageProcessor).to receive(:generate_animation).with(words, an_instance_of(Hash)).and_return('/public' + file)
+      processor_double = mock_image_processor_for_app
       post '/', "words" => words.join(' ')
+      wait_for {
+        # Second instance of processor is in a thread
+        ImageProcessor
+      }.to have_received(:new).with(words).exactly(2).times
+      expect(processor_double).to have_received(:generate_filename).with('public/generated')
+      expect(processor_double).to have_received(:generate_animation).with(an_instance_of(Hash))
       expect(last_response.body).to have_tag(".chunk-container--results .frame img")
+
     end
 
     it 'sets the form data' do
-      allow_any_instance_of(ImageProcessor).to receive(:generate_animation).and_return('/public' + file)
+      processor_double = mock_image_processor_for_app
       post '/', "words" => words.join(' '), 'delay' => 40, 'font' => 'Helvetica', 'font_size' => 20, 'background' => '#fcfcfc', 'fill' => '#fc2'
       expect(last_response.body).to have_tag "textarea", with: {name: 'words'}, text: words.join(' ')
       expect(last_response.body).to have_tag "input#delay-slider", with: {value: 40}
@@ -65,7 +80,7 @@ describe 'Gifitup' do
         expect(last_response.body).to have_tag "img", with: { src: "/#{f}"}
       end
     end
-    it 'renders the found files' do
+    it 'renders the only the `limit` number of files if that parameter is given' do
       get '/gallery?limit=1'
       expect(last_response.body).to have_tag "img", with: { src: "/#{files.last}"}
     end
