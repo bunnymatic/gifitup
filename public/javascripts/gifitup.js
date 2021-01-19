@@ -4,6 +4,12 @@ $(function () {
     spinner = new GIUSpinner();
 
     $("input[type=submit]").on("click", function () {
+      const value = $(this).val();
+      if (/marquee/i.test(value)) {
+        $(this)
+          .closest("form")
+          .append("<input type='hidden' name='marquee' value='marquee'/>");
+      }
       spinner.spin();
     });
 
