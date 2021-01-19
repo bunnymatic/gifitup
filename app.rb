@@ -32,15 +32,21 @@ class Gifitup < Sinatra::Base
     font_size = params['font_size']
     background = params['background'] || '#00000'
     fill = params['fill'] || '#ffffff'
+    marquee = !!params['marquee']
     async = false # params['async']
     file = nil
+
     if params.has_key? 'file'
       file_info = params[:file]
       file = save_file(file_info[:filename], file_info[:tempfile])
     end
 
     frames = []
-    if words && (words.length >= 1)
+
+    if marquee
+      words = WordProcessor.new(words).marquee
+    end
+    if words && (words.length >= 0)
       processor = ImageProcessor.new(words)
       outfile = processor.generate_filename(storage_directory)
 

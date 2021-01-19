@@ -31,6 +31,8 @@ describe 'Gifitup' do
       expect(last_response.body).to have_tag 'form select', with: {name: 'font'}
       expect(last_response.body).to have_tag 'form input', with: {name: 'background', type: "hidden"}
       expect(last_response.body).to have_tag 'form input', with: {name: 'fill', type: "hidden"}
+      expect(last_response.body).to have_tag 'form input', with: {type: 'submit', value: 'get it!'}
+      expect(last_response.body).to have_tag 'form input', with: {type: 'submit', value: 'marquee it!'}
     end
 
     it 'sets the default font' do
@@ -52,10 +54,22 @@ describe 'Gifitup' do
       expect(processor_double).to have_received(:generate_filename).with('public/generated')
       expect(processor_double).to have_received(:generate_animation).with(an_instance_of(Hash))
       expect(last_response.body).to have_tag(".chunk-container--results .frame img")
+    end
+
+    it 'generates marquee if the options are set' do
+      processor_double = mock_image_processor_for_app
+      post '/', "words" => "and", "marquee" => "yes"
+      wait_for {
+        # Second instance of processor is in a thread
+        ImageProcessor
+      }.to have_received(:new).with(["and ", "nd a", "d an", " and"]).exactly(2).times
+      expect(processor_double).to have_received(:generate_filename).with('public/generated')
+      expect(processor_double).to have_received(:generate_animation).with(an_instance_of(Hash))
+      expect(last_response.body).to have_tag(".chunk-container--results .frame img")
 
     end
 
-    it 'sets the form data' do
+    it 'resets the form data' do
       processor_double = mock_image_processor_for_app
       post '/', "words" => words.join(' '), 'delay' => 40, 'font' => 'Helvetica', 'font_size' => 20, 'background' => '#fcfcfc', 'fill' => '#fc2'
       expect(last_response.body).to have_tag "textarea", with: {name: 'words'}, text: words.join(' ')
@@ -64,7 +78,6 @@ describe 'Gifitup' do
       expect(last_response.body).to have_tag 'form input', with: {name: 'background', value: '#fcfcfc'}
       expect(last_response.body).to have_tag 'form input', with: {name: 'fill', value: '#fc2'}
     end
-
   end
 
   describe 'get /gallery' do
