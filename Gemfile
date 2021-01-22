@@ -1,9 +1,9 @@
 source "https://rubygems.org"
 ruby '2.6.6'
 gem 'sinatra'
-gem 'mojo_magick'
 gem 'slim'
 gem 'dalli'
+gem 'mojo_magick', '0.6.0'
 
 group :development, :test do
   gem 'rake'

@@ -16,12 +16,13 @@ class ImageProcessor
   }
 
   attr_reader :words
-  def initialize(words)
+  def initialize(words, logger=nil)
+    @logger = logger || Logger.new(STDOUT)
     @words = [words].flatten.compact
   end
 
   def generate_animation(opts = {})
-
+    @logger.info "generate_animation"
     outfile = opts.delete(:output_file)
     async = opts.delete(:async)
     unless outfile
@@ -41,6 +42,8 @@ class ImageProcessor
       opts[:background_file] = new_base
     end
     if async
+      @logger.info "generating async"
+
       threads = []
       frames = words.map do |word|
         tmpname = generate_frame_filename(word, tmpdir)
@@ -51,6 +54,7 @@ class ImageProcessor
       end
       threads.map(&:join)
     else
+      @logger.info "generating sync"
       frames = words.map do |word|
         generate_frame(word, opts)
       end
@@ -84,6 +88,7 @@ class ImageProcessor
         tmpdir = Dir.mktmpdir
         fname = generate_frame_filename(word, tmpdir)
       end
+      @logger.info "generating frame for #{word} in #{fname}"
 
       opts = DEFAULT_OPTS.merge(opts)
       opts[:pointsize] = 6 if opts[:pointsize].to_i < 6
@@ -110,8 +115,8 @@ class ImageProcessor
       end
       fname
     rescue Exception => ex
-      puts "ACK", ex
-      puts ex.backtrace
+      @logger.warn "ACK #{ex}"
+      @logger.warn ex.backtrace
     end
   end
 

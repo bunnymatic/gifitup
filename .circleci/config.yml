@@ -16,10 +16,4 @@ jobs:
       - run:
           name: install imagemagick
           command: sudo apt-get install imagemagick
-      - run:
-          name: check imagemagick
-          command: which identify
-      - run:
-          name: check imagemagick
-          command: sudo dpkg-query -L imagemagick
       - ruby/rspec-test

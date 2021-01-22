@@ -19,6 +19,8 @@ class Gifitup < Sinatra::Base
   set :public_folder, 'public'
   set :upload_directory, 'public/uploads'
 
+  enable :logging
+
   get '/' do
     fetch_fonts
     slim :index, :layout => :layout, :locals => {:frames => nil, :background => '#000000', :fonts => @fonts, :font => Font.default.name, :delay => 0.40 }
@@ -46,7 +48,7 @@ class Gifitup < Sinatra::Base
     if marquee
       words = WordProcessor.new(words).marquee
     end
-    if words && (words.length >= 0)
+    if words && (words.length > 0)
       processor = ImageProcessor.new(words)
       outfile = processor.generate_filename(storage_directory)
 
