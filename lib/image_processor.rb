@@ -108,7 +108,7 @@ class ImageProcessor
           c.send(opt, val)
         end
         if src_file
-          c.annotate word
+          c.annotate word, geometry: 0
         else
           c.label word
         end

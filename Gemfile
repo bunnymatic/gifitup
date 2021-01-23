@@ -3,7 +3,8 @@ ruby '2.6.6'
 gem 'sinatra'
 gem 'slim'
 gem 'dalli'
-gem 'mojo_magick', '0.6.0'
+gem 'mojo_magick', '~> 0.6.x'
+# gem 'mojo_magick', path: "../mojo_magick"
 
 group :development, :test do
   gem 'rake'
