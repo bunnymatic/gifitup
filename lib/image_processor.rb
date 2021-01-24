@@ -1,6 +1,7 @@
 require 'fileutils'
 require 'tmpdir'
 require 'mojo_magick'
+require 'logger'
 
 class ImageProcessor
 
@@ -99,7 +100,6 @@ class ImageProcessor
         opts[:background] = 'transparent'
       end
       opts.delete(:delay)
-      opts.delete(:font)
       r = MojoMagick::convert(src_file, fname) do |c|
         c.resize resize
         c.gravity 'center'
