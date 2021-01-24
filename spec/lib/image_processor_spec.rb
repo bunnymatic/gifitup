@@ -11,6 +11,14 @@ describe ImageProcessor do
       expect(MojoMagick).to receive(:convert).exactly(4).times
       described_class.new(%w(it's like this)).generate_animation
     end
+    it 'includes fonts' do
+      font = MojoMagick::available_fonts.first.name
+      processor = described_class.new(%w(rock on))
+      allow(processor).to receive(:generate_frame).and_call_original
+      processor.generate_animation({font: font})
+      expect(processor).to have_received(:generate_frame).with("rock", {font: font}).ordered
+      expect(processor).to have_received(:generate_frame).with("on", {font: font}).ordered
+    end
   end
 
   describe ".generate_filename" do
