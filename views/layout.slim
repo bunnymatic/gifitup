@@ -15,8 +15,10 @@ html
     .container
       == yield
     footer.footer
-      a href="/" go home
-      a href="/gallery" check out the gallery
+      a.footer-entry href="/" go home
+      a.footer-entry href="/gallery" check out the gallery
+      a.footer-entry.footer-entry--github href="https://github.com/bunnymatic/gifitup" title="source code on github"
+        img alt="source code on github" src="/images/github_logo.svg"
 
 
   - %w(//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js /javascripts/spin.min.js //cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js //cdnjs.cloudflare.com/ajax/libs/select2/3.4.4/select2.min.js /javascripts/jquery.slider.min.js /javascripts/spinit.js /javascripts/colpick.js /javascripts/image_poller.js /javascripts/gifitup.js).each do |js|

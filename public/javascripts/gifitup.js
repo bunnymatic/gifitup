@@ -96,6 +96,14 @@ $(function () {
       },
     });
 
+    $(".color-swap").on("click", function () {
+      var bg = $("#background").val();
+      var fg = $("#fill").val();
+      $("#background").val(fg);
+      $("#fill").val(bg);
+      syncColorBoxes();
+    });
+
     syncColorBoxes();
 
     /* returned polling message looks like this

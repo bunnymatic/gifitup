@@ -59,11 +59,19 @@ header {
   width: 33%;
   margin: auto;
 }
+
 footer {
   margin-top: 20px;
   display: flex;
   align-items: center;
   justify-content: space-around;
+  height: 30px;
+  line-height: 30px;
+}
+
+.footer .footer-entry--github img {
+  height: 30px;
+  width: 30px;
 }
 
 .logo {
@@ -355,14 +363,54 @@ input[type="submit"]:hover {
 }
 
 .form-group {
-  margin: 20px auto;
 }
+
 .form-group:first-child {
   margin-top: 0;
 }
 
-.form-group {
-  margin-bottom: 0;
+.form-group__color-picker {
+  position: relative;
+}
+
+.form-group__color-picker .color-swap {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  font-size: 30px;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-49%);
+}
+
+.color-swap--button-container {
+  mix-blend-mode: difference;
+  cursor: pointer;
+}
+
+.color-swap__button {
+  border-radius: 50%;
+  background: rgba(128,128,128,0.2);
+  height: 100%;
+  transform-origin: center;
+  transition: transform 0.2s ease-in-out;
+}
+
+.color-swap__button:hover {
+  transform-origin: center;
+  transform: scale(1.4);
+}
+
+.color-swap__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height:100%;
+  width: 100%;
+  top: -2px;
+  left: -1px;
+  opacity: 0.7;
 }
 
 .word-form textarea {
@@ -460,6 +508,7 @@ header {
   -moz-border-radius-bottomleft: 10px;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
+  border-right: none;
 }
 
 .color-box.right {
@@ -469,6 +518,7 @@ header {
   -moz-border-radius-bottomright: 10px;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
+  border-left: none;
 }
 
 .color-box {
