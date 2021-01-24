@@ -21,11 +21,15 @@ section.word-form__container
               option selected="selected" value=f #{f}
             - else
               option value=f #{f}
-      .form-group.cf
+      .form-group.form-group__color-picker.cf
         .background.color-picker
           .color-box.left
         .fill.color-picker
           .color-box.right
+        .color-swap.color-swap--button-container
+          .color-swap__button
+            .color-swap__icon
+              | &harr;
         input#background type="hidden" name="background" value="#{background}"
         input#fill type="hidden" name="fill" value="#{fill}"
       .form-group
