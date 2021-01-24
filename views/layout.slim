@@ -11,7 +11,7 @@ html
     header.header
       .logo
         a href="/"
-          img src='/images/gifitup_logo.png'
+          img src='/images/gifitup_logo.svg' title="Gif It Up!"
     .container
       == yield
     footer.footer
@@ -21,5 +21,5 @@ html
         img alt="source code on github" src="/images/github_logo.svg"
 
 
-  - %w(//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js /javascripts/spin.min.js //cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js //cdnjs.cloudflare.com/ajax/libs/select2/3.4.4/select2.min.js /javascripts/jquery.slider.min.js /javascripts/spinit.js /javascripts/colpick.js /javascripts/image_poller.js /javascripts/gifitup.js).each do |js|
+  - %w(//polyfill.io/v3/polyfill.min.js?features=fetch%2CObject.assign //cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.js //cdnjs.cloudflare.com/ajax/libs/select2/3.4.4/select2.min.js /javascripts/spin.min.js /javascripts/jquery.slider.min.js /javascripts/spinit.js /javascripts/colpick.jquery.js /javascripts/image_poller.js /javascripts/gifitup.js).each do |js|
     script type="text/javascript" src=js
