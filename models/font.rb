@@ -1,7 +1,7 @@
 class Font
   @@fonts = nil
   def self.available
-    @@fonts ||= MojoMagick::get_fonts
+    @@fonts ||= MojoMagick::available_fonts
   end
 
   def self.default
