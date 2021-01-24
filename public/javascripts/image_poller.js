@@ -1,6 +1,17 @@
 /**
    poll an image tag for a non 404
 */
+
+function ajaxGet(opts) {
+  return fetch(opts.url).then(function (resp) {
+    if (resp.status >= 400 && resp.status < 600) {
+      return Promise.reject(resp);
+    } else {
+      return Promise.resolve(true);
+    }
+  });
+}
+
 $.imagePollerDefaults = {
   spinner: "img-spinner",
   maximumPolls: 300,
@@ -48,18 +59,16 @@ $.fn.imagePoller = function (method) {
                 { numTries: ctr, maxNumTries: o.maximumPolls, file: href },
               ]);
             }
-            $.ajax({
-              url: href,
-              success: function (status, data, xhr) {
+            ajaxGet({ url: href })
+              .then(function (imageFound) {
                 $target.attr("src", href);
                 $target.show();
                 $("#img-spinner").remove();
-                found = true;
-              },
-              error: function (xhr, status, error) {
-                console.error("ERROR", status, error);
-              },
-            });
+                found = imageFound;
+              })
+              .catch(function (error) {
+                console.error("ERROR", error.status);
+              });
           }
         }, o.pollIntervalMs);
       });

@@ -429,7 +429,7 @@ For usage and examples: colpick.com/plugin
       };
     return {
       init: function (opt) {
-        opt = $.extend({}, defaults, opt || {});
+        opt = Object.assign({}, defaults, opt || {});
         //Set color
         if (typeof opt.color == "string") {
           opt.color = hexToHsb(opt.color);
@@ -453,7 +453,7 @@ For usage and examples: colpick.com/plugin
         return this.each(function () {
           //If the element does not have an ID
           if (!$(this).data("colpickId")) {
-            var options = $.extend({}, opt);
+            var options = Object.assign({}, opt);
             options.origColor = opt.color;
             //Generate and assign a random ID
             var id = "collorpicker_" + parseInt(Math.random() * 1000);

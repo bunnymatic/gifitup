@@ -1,6 +1,6 @@
 GIUSpinner = (function () {
   function GIUSpinner(opts) {
-    this.opts = _.extend(
+    this.opts = Object.assign(
       {
         lines: 13,
         length: 30,
