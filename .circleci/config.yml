@@ -11,10 +11,10 @@ jobs:
     executor: ruby/default
     steps:
       - checkout
+      - ruby/install-deps
       - run:
           name: Which bundler?
           command: bundle -v
-      - ruby/install-deps
       - run:
           name: install imagemagick
           command: sudo apt-get install imagemagick
