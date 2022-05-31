@@ -13,6 +13,8 @@ end
 group :development do
   gem 'byebug'
   gem 'irb'
+  gem 'rubocop'
+  gem 'rubocop-performance'
   gem 'rerun'
   gem 'tux'
 end

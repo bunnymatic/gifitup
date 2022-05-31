@@ -1,4 +1,4 @@
-name: "Ruby Test CI"
+name: "Ruby Test/Lint CI"
 on:
   push:
     branches: [ '**' ]
@@ -13,4 +13,15 @@ jobs:
         with:
           bundler-cache: true
       - name: Run tests
-        run: bundle exec rake spec
+        run: rake spec
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install Ruby and gems
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+      - name: Lint Ruby files
+        run: bundle exec rubocop

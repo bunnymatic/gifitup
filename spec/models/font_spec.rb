@@ -1,13 +1,13 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Font do
-
-  let(:font_list) { ['helvetica','courier'].map{|n| MojoMagick::Font.new(:name => n)} }
+  let(:font_list) { %w[helvetica courier].map { |n| MojoMagick::Font.new(name: n) } }
   before do
-    Font.class_variable_set(:@@fonts, nil)
+    Font.class_variable_set(:@@fonts, nil) # rubocop:disable Style/ClassVars
     allow(MojoMagick).to receive(:available_fonts).and_return(font_list)
   end
-
 
   describe '.available' do
     it 'grabs fonts from mojo_magick' do
@@ -22,7 +22,7 @@ describe Font do
     end
 
     describe 'when helvetica isn\'t available' do
-      let(:font_list) { ['whatever','whatever bold'].map{|n| MojoMagick::Font.new(:name => n)} }
+      let(:font_list) { ['whatever', 'whatever bold'].map { |n| MojoMagick::Font.new(name: n) } }
 
       it 'returns the first font' do
         expect(Font.default.name).to eql 'whatever'
