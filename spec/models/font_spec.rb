@@ -5,7 +5,7 @@ require 'spec_helper'
 describe Font do
   let(:font_list) { %w[helvetica courier].map { |n| MojoMagick::Font.new(name: n) } }
   before do
-    Font.class_variable_set(:@@fonts, nil)
+    Font.class_variable_set(:@@fonts, nil) # rubocop:disable Style/ClassVars
     allow(MojoMagick).to receive(:available_fonts).and_return(font_list)
   end
 

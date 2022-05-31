@@ -69,7 +69,7 @@ describe 'Gifitup' do
     end
 
     it 'resets the form data' do
-      processor_double = mock_image_processor_for_app
+      mock_image_processor_for_app
       post '/', 'words' => words.join(' '), 'delay' => 40, 'font' => 'Helvetica', 'font_size' => 20, 'background' => '#fcfcfc', 'fill' => '#fc2'
       expect(last_response.body).to have_tag 'textarea', with: { name: 'words' }, text: words.join(' ')
       expect(last_response.body).to have_tag 'input#delay-slider', with: { value: 40 }
