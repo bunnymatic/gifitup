@@ -4,6 +4,8 @@
 - font ||= font
 - font_size ||= 64
 - delay ||= 50
+- height ||= 400
+- width ||= 400
 - background ||= '#00000'
 - fill ||= '#ffffff'
 
@@ -38,6 +40,12 @@ section.word-form__container
       .form-group
         .delay.slider
           input#delay-slider type="slider" name="delay" value="#{delay}"
+      .form-group
+        .height.slider
+          input#height-slider type="slider" name="height" value="#{height}"
+      .form-group
+        .width.slider
+          input#width-slider type="slider" name="width" value="#{width}"
       .form-group
         .image-background
           input#image type="file" name="file"

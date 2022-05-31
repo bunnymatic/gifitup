@@ -45,6 +45,16 @@ $(function () {
       limits: false,
     });
 
+    $("#height-slider, #width-slider").slider({
+      from: 24,
+      to: 400,
+      step: 2,
+      round: 0,
+      dimension: " px",
+      skin: "c5",
+      limits: false,
+    });
+
     var setColor = function (elId, c) {
       if (c) {
         $("#" + elId).val(c);

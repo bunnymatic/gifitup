@@ -12,8 +12,10 @@ class ImageProcessor
     :gravity => 'center',
     :font => 'Helvetica-Bold',
     :pointsize => 64,
+    :delay => 60,
+    :height => 400,
+    :width => 400,
     :size => '400x400',
-    :delay => 60
   }
 
   attr_reader :words
@@ -37,9 +39,10 @@ class ImageProcessor
 
     # resize the original image first
     tmpdir = Dir.mktmpdir
+    puts opts
     if opts[:background_file]
       new_base = generate_frame_filename('bg', tmpdir)
-      MojoMagick::resize(opts[:background_file], new_base, :width => 400, :height => 400, :fill => true)
+      MojoMagick::resize(opts[:background_file], new_base, :width => opts[:width], :height => opts[:height], :fill => true)
       opts[:background_file] = new_base
     end
     if async
