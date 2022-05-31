@@ -1,0 +1,119 @@
+require:
+  - rubocop-performance
+
+AllCops:
+  # Only runs checks on specific directories. Could be expanded to
+  # include more directories.
+  DisplayCopNames: true
+  DisplayStyleGuide: true
+  SuggestExtensions: false
+  NewCops: enable
+  Include:
+    - app/**/*.rb
+    - spec/**/*.rb
+    - features/**/*.rb
+  Exclude:
+    - ./*.rb
+    - '**/*.sh'
+    - '**/*.bash'
+    - '**/*.yml'
+    - '**/*.txt'
+    - '**/*.md'
+    - 'bin/bundle'
+    - 'bin/setup'
+    - 'bin/update'
+    - 'bin/spring'
+    - 'lib/templates/**/*'
+    - 'lib/tasks/**/*'
+    - db/schema.rb
+    - db/migrate/**/*
+    - spec/*.opts
+    - tmp/**/*
+    - vendor/**/*
+    - log/**/*
+    - Gemfile
+    - Guardfile
+
+Lint/EmptyBlock:
+  Enabled: false
+
+Lint/RaiseException:
+  Enabled: true
+
+Lint/StructNewOverride:
+  Enabled: true
+
+Metrics/AbcSize:
+  Max: 38
+
+Layout/LineLength:
+  Max: 150
+  Exclude:
+    - 'config/initializers/**/*'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'config/initializers/**/*'
+    - 'config/routes.rb'
+    - 'spec/**/*spec.rb'
+    - spec/support/database_cleaner.rb
+
+Metrics/ClassLength:
+  Max: 300
+
+Metrics/MethodLength:
+  Max: 50
+  Exclude:
+    - 'spec/support/**/*'
+
+Performance/Count:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/DoubleNegation:
+  Enabled: false
+
+Style/FormatString:
+  EnforcedStyle: sprintf
+  SupportedStyles:
+    - sprintf
+    - format
+
+Style/FormatStringToken:
+  Enabled: false
+
+Style/HashEachMethods:
+  Enabled: true
+
+Style/HashTransformKeys:
+  Enabled: true
+
+Style/HashTransformValues:
+  Enabled: true
+
+Style/NumericPredicate:
+  Enabled: false
+
+Style/RegexpLiteral:
+  EnforcedStyle: slashes
+  SupportedStyles:
+    - slashes
+    - percent_r
+  AllowInnerSlashes: false
+
+Style/PerlBackrefs:
+  Enabled: false
+
+Style/TrailingCommaInArguments:
+  Enabled: true
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInArrayLiteral:
+  Enabled: true
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInHashLiteral:
+  Enabled: true
+  EnforcedStyleForMultiline: comma
