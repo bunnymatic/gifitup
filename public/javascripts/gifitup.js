@@ -1,4 +1,15 @@
 $(function () {
+  const DELAY_SLIDER_CONFIG = {
+    min: 0,
+    max: 3,
+    step: 0.1,
+  };
+  const FONT_SLIDER_CONFIG = {
+    min: 6,
+    max: 300,
+    step: 1,
+  };
+
   if ($("form.animator").length) {
     // we're on the index page
     spinner = new GIUSpinner();
@@ -26,9 +37,9 @@ $(function () {
     setTextareaFont($fontSelect.val());
 
     $("#delay-slider").slider({
-      from: 0,
-      to: 3,
-      step: 0.1,
+      from: DELAY_SLIDER_CONFIG.min,
+      to: DELAY_SLIDER_CONFIG.max,
+      step: DELAY_SLIDER_CONFIG.step,
       round: 1,
       dimension: " s",
       skin: "c5",
@@ -36,9 +47,9 @@ $(function () {
     });
 
     $("#font-size-slider").slider({
-      from: 6,
-      to: 200,
-      step: 1,
+      from: FONT_SLIDER_CONFIG.min,
+      to: FONT_SLIDER_CONFIG.max,
+      step: FONT_SLIDER_CONFIG.step,
       round: 0,
       dimension: " px",
       skin: "c5",
