@@ -1,9 +1,10 @@
 source "https://rubygems.org"
-ruby '2.6.6'
+ruby '3.3.6'
 gem 'sinatra'
 gem 'slim'
 gem 'dalli'
 gem 'mojo_magick'
+gem 'puma'
 #gem 'mojo_magick', path: "../mojo_magick"
 
 group :development, :test do
@@ -11,12 +12,11 @@ group :development, :test do
 end
 
 group :development do
-  gem 'byebug'
   gem 'irb'
+  gem 'racksh'
   gem 'rubocop'
   gem 'rubocop-performance'
   gem 'rerun'
-  gem 'tux'
 end
 
 group :test do
